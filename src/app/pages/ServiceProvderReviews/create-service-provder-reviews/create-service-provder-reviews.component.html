@@ -1,0 +1,54 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="example-form">
+    <h1 class="text-center">Create Service Provider Reviews</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Select a Customer</mat-label>
+                <mat-select formControlName="customerId" (selectionChange)="onCustomerChange($event)" required>
+                    <mat-option [value]="null" disabled>Select a Customer</mat-option>
+                    <mat-option *ngFor="let customer of customers" [value]="customer.id">
+                        {{ customer.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Select a Customer</mat-label>
+                <mat-select formControlName="serviceProviderId" (selectionChange)="onServiceProvider($event)" required>
+                    <mat-option [value]="null" disabled>Select a Customer</mat-option>
+                    <mat-option *ngFor="let sProvider of serviceProvider" [value]="sProvider.id">
+                        {{ sProvider.businessName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>Review Description</mat-label>
+                <textarea matInput formControlName="reviewDescription" required></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>Rating</mat-label>
+                <input matInput type="number" formControlName="rating" required>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>Review Date</mat-label>
+                <input matInput type="date" formControlName="reviewDate" required>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

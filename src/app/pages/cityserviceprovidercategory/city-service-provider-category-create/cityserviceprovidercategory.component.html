@@ -1,0 +1,25 @@
+<form [formGroup]="cityServicesCategoryForm" (ngSubmit)="onSubmit()">
+  <h1>{{data ? 'Update City Services Category': 'Create City Services Category'}}</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Select a City</mat-label>
+    <mat-select formControlName="cityId" (selectionChange)="onCityChange($event)" required>
+      <mat-option [value]="null" disabled>Select a City</mat-option>
+      <mat-option *ngFor="let City of Cities" [value]="City.id">
+        {{ City.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Select a serviceProviderCategorName</mat-label>
+    <mat-select formControlName="serviceProviderCategoryId" (selectionChange)="onCategoryChange($event)" required>
+      <mat-option [value]="null">Select a serviceProviderCategorName</mat-option>
+      <mat-option *ngFor="let CPC of cityprovidercatergories" [value]="CPC.id">
+        {{ CPC.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+  </div>
+</form>

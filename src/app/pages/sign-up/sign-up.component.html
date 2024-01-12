@@ -1,0 +1,264 @@
+<!-- <div class="container-fluid nav">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="logo">
+                <img src="../../../assets/images/logo.png" alt="">
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="container-fluid container_body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title">
+                <h2>Create New Account</h2>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <form (ngSubmit)="onSubmit()">
+                            <div class="register_title">
+                                <h3>Register</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="icon">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="form">
+                                        <input type="text" autocomplete="off" id="firstName" name="firstName"
+                                            [(ngModel)]="signup.firstName" required minlength="3" maxlength="20" ngModel
+                                            #firstName="ngModel" />
+                                        <label for="text" class="label-name">
+                                            <span class="content-name">
+                                                First Name
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+                                        class="alert">
+                                        <small *ngIf="firstName.errors?.['required']" class="text-danger">
+                                            Name is required.
+                                        </small>
+                                        <small *ngIf="firstName.errors?.['minlength']" class="text-danger">
+                                            Name must be at least 3 characters long.
+                                        </small>
+                                        <small *ngIf="firstName.errors?.['maxlength']" class="text-danger">
+                                            Name maximum lenght 20</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="icon">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="form">
+                                        <input type="text" autocomplete="off" id="lastName" name="lastName"
+                                            [(ngModel)]="signup.lastName" required minlength="3" maxlength="20" ngModel
+                                            #lastName="ngModel" />
+                                        <label for="text" class="label-name">
+                                            <span class="content-name">
+                                                Last Name
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert">
+                                        <small *ngIf="lastName.errors?.['required']" class="text-danger">
+                                            Name is required.
+                                        </small>
+                                        <small *ngIf="lastName.errors?.['minlength']" class="text-danger">
+                                            Name must be at least 3 characters long.
+                                        </small>
+                                        <small *ngIf="lastName.errors?.['maxlength']" class="text-danger">
+                                            Name maximum lenght 20</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="icon">
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="form">
+                                        <input type="text" autocomplete="off" id="email" name="email"
+                                            [(ngModel)]="signup.email" required minlength="3" maxlength="20" ngModel
+                                            #email="ngModel" />
+                                        <label for="text" class="label-name">
+                                            <span class="content-name">
+                                                Email
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
+                                        <small *ngIf="email.errors?.['required']" class="text-danger">
+                                            Name is required.
+                                        </small>
+                                        <small *ngIf="email.errors?.['minlength']" class="text-danger">
+                                            Name must be at least 3 characters long.
+                                        </small>
+                                        <small *ngIf="email.errors?.['maxlength']" class="text-danger">
+                                            Name maximum lenght 20</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="icon">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="form">
+                                        <input type="text" autocomplete="off" id="userName" name="userName"
+                                            [(ngModel)]="signup.userName" required minlength="3" maxlength="20" ngModel
+                                            #userName="ngModel" />
+                                        <label for="text" class="label-name">
+                                            <span class="content-name">
+                                                User Name
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="alert">
+                                        <small *ngIf="userName.errors?.['required']" class="text-danger">
+                                            Name is required.
+                                        </small>
+                                        <small *ngIf="userName.errors?.['minlength']" class="text-danger">
+                                            Name must be at least 3 characters long.
+                                        </small>
+                                        <small *ngIf="userName.errors?.['maxlength']" class="text-danger">
+                                            Name maximum lenght 20</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="icon">
+
+                                        <i class="fa fa-phone" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="form">
+                                        <input type="text" autocomplete="off" id="mobileNumber" name="mobileNumber"
+                                            [(ngModel)]="signup.mobileNumber" required minlength="3" maxlength="20"
+                                            ngModel #mobileNumber="ngModel" />
+                                        <label for="text" class="label-name">
+                                            <span class="content-name">
+                                                Mobile Number
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)"
+                                        class="alert">
+                                        <small *ngIf="mobileNumber.errors?.['required']" class="text-danger">
+                                            MobileNumber is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="icon">
+
+                                        <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="form">
+                                        <input type="text" autocomplete="off" id="address" name="address"
+                                            [(ngModel)]="signup.address" required minlength="3" maxlength="20" ngModel
+                                            #address="ngModel" />
+                                        <label for="text" class="label-name">
+                                            <span class="content-name">
+                                                Address
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert">
+                                        <small *ngIf="address.errors?.['required']" class="text-danger">
+                                            address is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="icon">
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="form">
+                                        <input type="password" autocomplete="off" id="password" name="password"
+                                            [(ngModel)]="signup.password" required minlength="4" maxlength="20" ngModel
+                                            #password="ngModel" />
+                                        <label for="text" class="label-name">
+                                            <span class="content-name">
+                                                Password
+                                            </span>
+                                        </label>
+                                    </div>
+
+                                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+                                        <small *ngIf="password.errors?.['required']" class="text-danger">
+                                            Password is required.
+                                        </small>
+                                        <small *ngIf="password.errors?.['minlength']" class="text-danger">
+                                            Password must be at least 4 characters long.
+                                        </small>
+                                        <small *ngIf="password.errors?.['maxlength']" class="text-danger">
+                                            Password maximum lenght 20</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="icon">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="form">
+                                        <input type="text" autocomplete="off" id="role" name="role"
+                                            [(ngModel)]="signup.role" required minlength="1" maxlength="10" ngModel
+                                            #role="ngModel" />
+                                        <label for="text" class="label-name">
+                                            <span class="content-name">
+                                                Role
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="login_btn">
+                                        <button type="submit">Sign Up</button>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+ng-container {
+    text-align: center;
+}
+
+.main-body {
+    padding-top: 20px;
+    margin: 0 auto;
+    width: 100%;
+
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.create_btn {
+    float: right;
+    margin-top: 10px;
+}
+
+.action {
+    display: flex;
+    gap: 5px;
+}
+
+.header {
+    background-color: #393939;
+}
+
+.icon_header {
+    display: flex;
+    margin-top: 10px;
+}
+
+.icon_header h1,
+i {
+    color: white;
+    padding-left: 10px;
+}
+
+.icon_header i {
+    margin-top: 6px;
+    font-size: 20px;
+}
+
+.container {
+    border: solid 1px #393939;
+    margin-top: 40px;
+}

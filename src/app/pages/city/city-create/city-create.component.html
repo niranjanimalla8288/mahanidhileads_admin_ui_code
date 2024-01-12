@@ -1,0 +1,40 @@
+<form [formGroup]="cityForm" (ngSubmit)="onSubmit()">
+    <h1>City</h1>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Select a State</mat-label>
+        <mat-select formControlName="stateId" (selectionChange)="onCategoryChange($event)" required>
+            <mat-option [value]="null" disabled>Select a State</mat-option>
+            <mat-option *ngFor="let state of States" [value]="state.id">
+                {{ state.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter your name" />
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="fill">
+        <mat-label>State Id</mat-label>
+        <input matInput formControlName="stateId" placeholder="Enter your name" />
+    </mat-form-field> -->
+
+    <!-- <mat-form-field appearance="fill">
+        <mat-label>State ID</mat-label>
+        <mat-select formControlName="stateId" placeholder="Select a state">
+            <mat-option *ngFor="let state of states" [value]="state.id">{{ state.name }}</mat-option>
+        </mat-select>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill">
+        <mat-label>GPS Location</mat-label>
+        <input matInput formControlName="gpslocation" />
+    </mat-form-field>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

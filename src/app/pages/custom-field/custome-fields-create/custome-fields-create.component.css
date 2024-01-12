@@ -1,0 +1,14 @@
+mat-form-field {
+    width: 100%;
+}
+
+.container {
+    margin-top: 50px;
+    padding: 50px;
+    width: 100%;
+}
+
+.mat_form {
+    padding: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

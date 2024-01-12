@@ -1,0 +1,71 @@
+<form [formGroup]="badgeForm" (ngSubmit)="onSubmit()">
+    <h1>Offers</h1>
+
+    <!-- <mat-form-field appearance="fill">
+        <mat-label>PostId</mat-label>
+        <input matInput formControlName="postId" required />
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>HasTimeLimit</mat-label>
+        <input matInput formControlName="hasTimeLimit" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>CreatedBy</mat-label>
+        <input matInput formControlName="createdBy" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <input matInput formControlName="status" required />
+    </mat-form-field>
+
+    <div class="">
+        <label for="featuredImage">FeaturedImage</label>
+        <input type="file" id="featuredImage" formControlName="featuredImage" (change)="onchange($event)"
+            accept="image/*" required>
+        <img src="{{logoBas64}}" *ngIf="logoBas64" width="200" height="200" />
+    </div>
+    <!-- <mat-form-field> -->
+
+    <!-- </mat-form-field> -->
+    <!-- 
+    <input type="file" id="featuredImage" formControlName="featuredImage" (change)="onchange($event)" accept="image/*" required>
+      <img src="{{logoBas64}}" *ngIf="logoBas64" width="200" height="200" /> -->
+
+    <!-- <mat-form-field appearance="fill">
+        <mat-label>ActivationDate</mat-label>
+        <input matInput type="date" formControlName="activationDate" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>ExpirationDate</mat-label>
+        <input matInput type="date" formControlName="expirationDate" required />
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+        <mat-label>CreatedTime</mat-label>
+        <input matInput type="datetime"  formControlName="createdTime" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>PublishTime</mat-label>
+        <input matInput type="datetime"  formControlName="publishTime" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>LastUpdatedTime</mat-label>
+        <input matInput type="time"  formControlName="lastUpdatedTime" required />
+    </mat-form-field>
+     -->
+
+
+
+
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

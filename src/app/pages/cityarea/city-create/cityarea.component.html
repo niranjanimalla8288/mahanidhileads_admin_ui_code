@@ -1,0 +1,35 @@
+<form [formGroup]="cityAreaForm" (ngSubmit)="onSubmit()">
+    <h1>City Area</h1>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter your name" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Select a City</mat-label>
+        <mat-select formControlName="cityId" (selectionChange)="onCategoryChange($event)" required>
+            <mat-option [value]="null" disabled>Select a City</mat-option>
+            <mat-option *ngFor="let City of Cities" [value]="City.id">
+                {{ City.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Pin Code</mat-label>
+        <input matInput formControlName="pinCode" placeholder="Enter pin code" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>GPS Location</mat-label>
+        <input matInput formControlName="gpslocation" placeholder="Enter GPS location" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Search Radius (in kms)</mat-label>
+        <input matInput formControlName="searchRadiusInKms" placeholder="Enter search radius" />
+    </mat-form-field>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

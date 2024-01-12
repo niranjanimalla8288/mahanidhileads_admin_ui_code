@@ -1,0 +1,172 @@
+<mat-tab-group #tabGroup>
+  <!-- General Information Tab -->
+
+  <mat-tab label="General Information">
+    <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Business Name</mat-label>
+          <input matInput formControlName="businessName" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <label for="">Main Category</label>
+          <mat-select formControlName="mainCategoryId" (selectionChange)="onmainCategory($event)" required>
+            <mat-option *ngFor="let category of mainCategoryModel" [value]="category.id">{{category.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Package</mat-label>
+          <mat-select formControlName="serviceDescription" (selectionChange)="onmainCategory($event)" required>
+            <mat-option *ngFor="let plan of planDetails" [value]="plan.id">{{plan.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Sub Category</mat-label>
+          <mat-select formControlName="subCategoryId" (selectionChange)="onSubCategory($event)" required>
+            <mat-option *ngFor="let subCategory of subCategoryModel" [value]="subCategory.id">{{subCategory.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label>ThumbnailImage</label>
+          <input type="file" formControlName="thumnailImagePath" (change)="onchange($event)">
+        </div>
+        <div class="col-md-6">
+          <img class="baseImage" [src]="logoBas641" width="100" height="80" alt="">
+        </div>
+      </div>
+      <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+      </div>
+    </form>
+  </mat-tab>
+
+  <!-- Address Tab -->
+  <mat-tab label="Address">
+    <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Mobile Number</mat-label>
+          <input matInput formControlName="mobileNumber" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Address Line 1</mat-label>
+            <input matInput formControlName="addressLine1" />
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Address Line 2</mat-label>
+            <input matInput formControlName="addressLine2" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Select State</mat-label>
+            <mat-select (selectionChange)="OnSelectState()" formControlName="stateId" required>
+              <mat-option *ngFor="let sp of Statedata" [value]="sp.id">{{ sp.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Select City</mat-label>
+            <mat-select formControlName="cityId">
+              <mat-option *ngFor="let ct of cityDt" [value]="ct.id">{{ct.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Pin Code</mat-label>
+          <input matInput formControlName="pinCode" />
+        </mat-form-field>
+      </div>
+
+      <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+        <!-- ... -->
+      </div>
+    </form>
+  </mat-tab>
+
+  <!-- Additional Information Tab -->
+  <mat-tab label="Additional Information">
+    <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Enrolled Date</mat-label>
+          <input matInput type="date" formControlName="enrolledDate" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Year of Establishment</mat-label>
+          <input matInput type="number" formControlName="yearOfEstablishment" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Working Hours</mat-label>
+          <input matInput formControlName="workingHours" />
+        </mat-form-field>
+      </div>
+
+      <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+        <!-- ... -->
+      </div>
+    </form>
+  </mat-tab>
+
+  <!-- Payment and Ratings Tab -->
+  <mat-tab label="Payment and Ratings">
+    <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Modes of Payment</mat-label>
+          <input matInput formControlName="modesOfPayment" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Current Rating</mat-label>
+          <input matInput type="number" formControlName="currentRating" />
+        </mat-form-field>
+      </div>
+
+      <!-- Add other payment and rating-related form controls here -->
+      <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+      </div>
+
+    </form>
+  </mat-tab>
+
+</mat-tab-group>

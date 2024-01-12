@@ -1,0 +1,33 @@
+<form [formGroup]="serviceForm" (ngSubmit)="onSubmit()" class="example-form">
+    <h1 class="text-center">Create Service Provider Services</h1>
+
+
+    <mat-form-field appearance="fill">
+        <mat-label>Select Service Provider Category</mat-label>
+        <mat-select formControlName="serviceProviderCategoryServicesId"
+            (selectionChange)="onServiceProviderCategory($event)" required>
+            <mat-option *ngFor="let spcsModel of serviceProviderCategoryServiceModel"
+                [value]="spcsModel.id">{{spcsModel.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Select Service Provider</mat-label>
+        <mat-select formControlName="serviceProviderId" (selectionChange)="onSelect_serviceProvider($event)" required>
+            <mat-option *ngFor="let servicePriovder of serviceProviderModel"
+                [value]="servicePriovder.id">{{servicePriovder.businessName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-grid-tile><input type="file" formControlName="thumnailImagePath"
+                (change)="onchange($event)"></mat-grid-tile>
+        <mat-grid-tile><img class="baseImage" src="{{ logoBas64 }}" width="100" height="80" alt="" /></mat-grid-tile>
+
+    </mat-grid-list>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

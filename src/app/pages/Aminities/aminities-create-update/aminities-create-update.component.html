@@ -1,0 +1,24 @@
+<form [formGroup]="badgeForm" (ngSubmit)="onSubmit()">
+    <h1>Aminities</h1>
+
+    <mat-form-field appearance="fill">
+        <mat-label>CategoryId</mat-label>
+        <input matInput formControlName="categoryId" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Options</mat-label>
+        <input matInput formControlName="options" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <input matInput formControlName="status" required />
+    </mat-form-field>
+
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>
+

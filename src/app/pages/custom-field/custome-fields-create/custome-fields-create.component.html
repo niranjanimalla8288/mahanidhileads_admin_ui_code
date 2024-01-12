@@ -1,0 +1,58 @@
+<form [formGroup]="paymentModeForm" (ngSubmit)="onSubmit()">
+    <h1 class="text-center">Customer Fields</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Select a State</mat-label>
+                <mat-select formControlName="categoryId" (selectionChange)="onState($event)" required>
+                    <mat-option *ngFor="let Cat of Category" [value]="Cat.id">{{Cat.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Field Name</mat-label>
+                <input matInput formControlName="fieldName" placeholder="Enter your fieldName" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Field Title</mat-label>
+                <input matInput formControlName="fieldTitle" placeholder="Enter your FieldTitle" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Type</mat-label>
+                <input matInput formControlName="type" placeholder="Enter your type" />
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Options</mat-label>
+                <input matInput formControlName="options" placeholder="Enter your options" />
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>helpText</mat-label>
+                <input matInput formControlName="helpText" placeholder="Enter your name" />
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>ShowInDetail</mat-label>
+                <input matInput formControlName="showInDetail" placeholder="Enter your showInDetail" />
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>ShowInSearch</mat-label>
+                <input matInput formControlName="showInSearch" placeholder="Enter your showInSearch" />
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>SortOrder</mat-label>
+                <input matInput formControlName="sortOrder" placeholder="Enter your sortOrder" />
+            </mat-form-field>
+        </div>
+    </div>
+
+
+
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

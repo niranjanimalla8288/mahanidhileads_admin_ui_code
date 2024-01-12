@@ -1,0 +1,144 @@
+.dashboard_container {
+    border: solid 1px black;
+}
+
+.dashboard_container .header {
+    background-color: #333333;
+    padding: 10px;
+}
+
+.dashboard_container i {
+    color: white;
+    font-size: 18px;
+}
+
+.dashboard_container h3 {
+    font-size: 19px;
+    display: inline-block;
+    line-height: 20px;
+    margin: 0;
+    color: #fff;
+    font-weight: 300;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+.dashboard_cards {
+    padding: 20px;
+}
+
+.dashboard_cards .cards {
+    width: 100%;
+    border-radius: 8px;
+    height: 150px;
+    padding: 20px;
+}
+
+.dashboard_cards .card1 {
+    background-color: var(--grey_color);
+}
+
+.dashboard_cards .card2 {
+    background-color: var(--yello_color);
+}
+
+.dashboard_cards .card3 {
+    background-color: var(--blue_color);
+}
+
+.dashboard_cards .card4 {
+    background-color: var(--grey_color);
+}
+
+.dashboard_cards .cards i {
+    font-size: 78px;
+    color: #76959159;
+}
+
+.dashboard_cards .cards .big_text {
+    font-size: 50px;
+    color: white;
+    margin-top: 22px;
+    float: right;
+}
+
+.dashboard_cards .cards .card_title {
+    float: right;
+    font-size: 20px;
+    color: white;
+}
+
+.button_group a {
+    font-weight: 400;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+
+}
+
+.button_group {
+    margin-top: 30px;
+
+}
+
+.button_group .add_btn_1 {
+    background-color: #21a9e1;
+    border-radius: 5px;
+    padding: 8px 30px;
+
+}
+
+.button_group .add_btn_2 {
+    background-color: #0aa699;
+    border-radius: 5px;
+    padding: 8px 30px;
+    margin-left: 10px;
+
+}
+
+.footer {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.footer span {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.fa-bars {
+    margin-left: 20px;
+    cursor: pointer;
+    color: #0aa699;
+}
+
+.dashboard {
+    padding: 15px;
+    margin-top: -38px;
+}
+
+.user_img span {
+    font-size: 18px;
+    color: #BD110A;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.user_img span a {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+nav ul li {
+    padding-left: 10px;
+}
+
+nav ul li a span {
+    margin-left: 10px;
+    color: #393939;
+}
+
+nav ul li a i {
+    color: #393939;
+}

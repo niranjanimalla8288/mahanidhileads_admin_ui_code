@@ -1,0 +1,121 @@
+<!-- <div class="container-fluid nav">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="logo">
+                <img src="../../../assets/images/logo.png" alt="">
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="container-fluid container_body">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <div class="logo">
+                <img src="../../../assets/images/logo.png" alt="">
+            </div> -->
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <form (ngSubmit)="onSubmit()">
+                        <div class="register_title">
+                            <h3>Login</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="icon">
+                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-11">
+                                <div class="form">
+                                    <input type="text" autocomplete="off" id="userName" name="userName"
+                                        [(ngModel)]="login.userName" required minlength="3" maxlength="20" ngModel
+                                        #userName="ngModel" />
+                                    <label for="text" class="label-name">
+                                        <span class="content-name">
+                                            User Name
+                                        </span>
+                                    </label>
+                                </div>
+                                <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="alert">
+                                    <small *ngIf="userName.errors?.['required']" class="text-danger">
+                                        Name is required.
+                                    </small>
+                                    <small *ngIf="userName.errors?.['minlength']" class="text-danger">
+                                        Name must be at least 3 characters long.
+                                    </small>
+                                    <small *ngIf="userName.errors?.['maxlength']" class="text-danger">
+                                        Name maximum lenght 20</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="icon">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-11">
+                                <div class="form">
+                                    <input type="password" autocomplete="off" id="password" name="password"
+                                        [(ngModel)]="login.password" required minlength="4" maxlength="20" ngModel
+                                        #password="ngModel" />
+                                    <label for="text" class="label-name">
+                                        <span class="content-name">
+                                            Password
+                                        </span>
+                                    </label>
+                                </div>
+                                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+                                    <small *ngIf="password.errors?.['required']" class="text-danger">
+                                        Password is required.
+                                    </small>
+                                    <small *ngIf="password.errors?.['minlength']" class="text-danger">
+                                        Password must be at least 4 characters long.
+                                    </small>
+                                    <small *ngIf="password.errors?.['maxlength']" class="text-danger">
+                                        Password maximum lenght 20</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Keep Logged in
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="forgot_password">
+                                    <a>Forggot Password?</a>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="login_btn">
+                                    <button style=" background-color: blueviolet; color: white  ;"
+                                        type="submit">Login</button>
+                                </div>
+                                <hr>
+                            </div>
+                            <!-- <div class="col-md-8">
+                                <div class="sing_up">
+                                    <span>Don't have an account? <a routerLink="/signup">Sign Up here</a></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="remote_support">
+                                    <a>Remote Support</a>
+                                </div>
+                            </div> -->
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+</div>

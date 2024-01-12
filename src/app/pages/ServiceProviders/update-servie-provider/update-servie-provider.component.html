@@ -1,0 +1,378 @@
+<mat-tab-group #tabGroup>
+    <!-- General Information Tab -->
+    <mat-tab label="General">
+        <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Business Name</mat-label>
+                    <input matInput formControlName="businessName">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Sub Category</mat-label>
+                    <mat-select matInput formControlName="subCategoryId" (selectionChange)="onSubCategory($event)"
+                        required>
+                        <mat-option *ngFor="let subCategory of subCategoryModel"
+                            [value]="subCategory.id">{{subCategory.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Main Category</mat-label>
+                    <mat-select matInput formControlName="mainCategoryId" (selectionChange)="onmainCategory($event)"
+                        required>
+                        <mat-option *ngFor="let category of mainCategoryModel" [value]="category.id">{{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="file" id="thumbnailImagePath" formControlName="thumbnailImagePath"
+                        (change)="onchange($event)" accept="image/*">
+
+                </div>
+                <div class="col-md-6">
+                    <div class="image">
+                        <img src="{{logoBas641}}" />
+                    </div>
+                </div>
+            </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="Address">
+        <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput placeholder="Mobile Number" formControlName="mobileNumber">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>WhatsApp Number</mat-label>
+                        <input matInput placeholder="WhatsApp Number" formControlName="watsAppNumber">
+                    </mat-form-field>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Address Line 1</mat-label>
+                    <input matInput placeholder="Address Line 1" formControlName="addressLine1">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Address Line 2</mat-label>
+                    <input matInput placeholder="Address Line 3" formControlName="addressLine3">
+                </mat-form-field>
+            </div>
+            <div class="row">
+
+                <mat-form-field>
+                    <mat-label>Address Line 3</mat-label>
+                    <input matInput placeholder="Address Line 2" formControlName="addressLine2">
+                </mat-form-field>
+            </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="Location">
+        <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Pincode</mat-label>
+                    <input matInput placeholder="Pin Code" formControlName="pinCode">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>GPS Location</mat-label>
+                    <input matInput placeholder="GPS Location" formControlName="gpsLocation">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Contact Person</mat-label>
+                        <input matInput placeholder="Contact Person" formControlName="contactPerson">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+
+                        <mat-label>Enrolled Date</mat-label>
+                        <input matInput type="date" placeholder="Enrolled Date" formControlName="enrolledDate">
+                    </mat-form-field>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>GST Number</mat-label>
+                        <input matInput placeholder="GST Number" formControlName="gstNumber">
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Cin Number</mat-label>
+                        <input matInput placeholder="CIN Number" formControlName="cinNumber">
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="Working Hour">
+        <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Year Of Establishment</mat-label>
+                    <input matInput placeholder="Year Of Establishment" formControlName="yearOfEstablishment">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Working Hours</mat-label>
+                        <input matInput placeholder="Working Hours" formControlName="workingHours">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input matInput placeholder="Holidays" formControlName="holidays">
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input matInput placeholder="Modes Of Payment" formControlName="modesOfPayment">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Current Rating</mat-label>
+                        <input matInput placeholder="Current Rating" formControlName="currentRating">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Founded</mat-label>
+                    <input matInput placeholder="Founded" formControlName="founded">
+                </mat-form-field>
+            </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="Description">
+        <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a State</mat-label>
+                        <mat-select matInput formControlName="stateId" (selectionChange)="onState($event)">
+                            <mat-option *ngFor="let state of stateModel" [value]="state.id">{{state.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field>
+                        <input matInput placeholder="State ID" formControlName="stateId">
+                    </mat-form-field> -->
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a City</mat-label>
+                        <mat-select matInput formControlName="cityId" (selectionChange)="onCity($event)">
+                            <mat-option *ngFor="let city of cityModel" [value]="city.id">{{city.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Selected Package</mat-label>
+                        <input matInput placeholder="Selected Package" formControlName="selectedPackage">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Title</mat-label>
+                        <input matInput placeholder="Title" formControlName="title">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Description</mat-label>
+                    <textarea matInput placeholder="Description" formControlName="desciption"></textarea>
+                </mat-form-field>
+            </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="Working Time">
+        <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Monday</mat-label>
+                        <input matInput type="date" placeholder="Monday" formControlName="monday">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Tuesday</mat-label>
+                        <input matInput type="date" placeholder="Tuesday" formControlName="tuesday">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Wednesday</mat-label>
+                        <input matInput type="date" placeholder="Wednesday" formControlName="wednesday">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Thursday</mat-label>
+                        <input matInput type="date" placeholder="Thursday" formControlName="thursday">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Friday</mat-label>
+                        <input matInput type="date" placeholder="Friday" formControlName="friday">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Saturday</mat-label>
+                        <input matInput type="date" placeholder="Saturday" formControlName="saturday">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Sunday</mat-label>
+                        <input matInput type="date" placeholder="Sunday" formControlName="sunday">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="Social Media">
+        <form [formGroup]="serviceproviderForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Facebook Link</mat-label>
+                        <input matInput placeholder="Facebook" formControlName="facebook">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Twitter Link</mat-label>
+                        <input matInput placeholder="Twitter Link" formControlName="twitterLink">
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>LinkedIn Link</mat-label>
+                        <input matInput placeholder="LinkedIn Link" formControlName="linkedinLink">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Pinterest Link</mat-label>
+                        <input matInput placeholder="Pinterest Link" formControlName="pintrestLink">
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Google Plus Link</mat-label>
+                        <input matInput placeholder="Google Plus Link" formControlName="googleplusLink">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Instagram Link</mat-label>
+                        <input matInput placeholder="Instagram Link" formControlName="instagramLink">
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>WebSite Link</mat-label>
+                        <input matInput placeholder="Website Link" formControlName="websiteLink">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a Amenity</mat-label>
+                        <mat-select matInput formControlName="amenitiesId" (selectionChange)="onAmenities($event)">
+                            <mat-option *ngFor="let ameinti of amenitiesModel" [value]="ameinti.id">{{ameinti.options}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button color="primary" type="submit">Submit</button>
+            </div>
+        </form>
+    </mat-tab>
+</mat-tab-group>

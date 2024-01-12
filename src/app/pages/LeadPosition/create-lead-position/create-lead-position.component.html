@@ -1,0 +1,72 @@
+<form [formGroup]="cityForm" (ngSubmit)="onSubmit()">
+    <h1>City</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Select a Category</mat-label>
+                <mat-select formControlName="categoryId" (selectionChange)="onCategoryChange($event)" required>
+                    <mat-option [value]="null" selected>Select a getCategoryName</mat-option>
+                    <mat-option *ngFor="let state of Categories" [value]="state.id">
+                        {{ state.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Select a City</mat-label>
+                <mat-select formControlName="cityId" (selectionChange)="onCategoryChange($event)" required>
+                    <mat-option [value]="null" selected>Select a City</mat-option>
+                    <mat-option *ngFor="let state of Cities" [value]="state.id">
+                        {{ state.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Select a Lead Position Range</mat-label>
+                <mat-select formControlName="leadpositionRangeId" (selectionChange)="onCategoryChange($event)" required>
+                    <mat-option [value]="null" selected>Select a Lead Position Range</mat-option>
+                    <mat-option *ngFor="let leadpr of leadPositionRange" [value]="leadpr.id">
+                        {{ leadpr.positionName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Select a Service Provider</mat-label>
+                <mat-select formControlName="serviceProviderId" (selectionChange)="onCategoryChange($event)" required>
+                    <mat-option [value]="null" selected>Select a Service Provider</mat-option>
+                    <mat-option *ngFor="let state of Sp" [value]="state.id">
+                        {{ state.businessName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>From Date</mat-label>
+                <input matInput formControlName="fromDate" type="date" required />
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>To Date</mat-label>
+                <input matInput formControlName="toDate" type="date" required />
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

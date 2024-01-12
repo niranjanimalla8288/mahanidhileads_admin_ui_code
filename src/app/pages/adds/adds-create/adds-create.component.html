@@ -1,0 +1,58 @@
+<!-- add-form.component.html -->
+
+<form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    <h1>Adds</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select a City</mat-label>
+                    <mat-select formControlName="cityid" (selectionChange)="onCity($event)" required>
+                        <mat-option *ngFor="let city of cityModel" [value]="city.id">{{city.name}}
+                        </mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <mat-form-field>
+                    <mat-label>Add Place</mat-label>
+                    <input matInput formControlName="addPlace" placeholder="Enter Add Place" />
+                </mat-form-field>
+
+            </div>
+            <div class="col-md-12">
+                <mat-form-field>
+                    <mat-label>From Date</mat-label>
+                    <input matInput formControlName="fromDate" placeholder="Select From Date"
+                        [matDatepicker]="picker1" />
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <mat-form-field>
+                    <mat-label>To Date</mat-label>
+                    <input matInput formControlName="toDate" placeholder="Select To Date" [matDatepicker]="picker2" />
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+            </div>
+            <div class="col-md-6">
+                <input type="file" id="addImage" formControlName="addImage" (change)="onchange($event)"
+                    accept="image/*">
+
+            </div>
+            <div class="col-md-6">
+                <div class="image">
+                    <img width="200" height="200" src="{{logoBas641}}" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

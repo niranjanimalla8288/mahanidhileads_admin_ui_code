@@ -1,0 +1,22 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" action="">
+    <h1>Create Service Provider Badges</h1>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Select Service Provider</mat-label>
+        <mat-select formControlName="serviceProviderId" (selectionChange)="onServiceProviderBusiness($event)" required>
+            <mat-option *ngFor="let spName of serviceProviderModel" [value]="spName.id">{{spName.businessName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Select Business Tag </mat-label>
+        <mat-select formControlName="businessTagId" (selectionChange)="onbusinessTagId($event)" required>
+            <mat-option *ngFor="let business of businessTagModel" [value]="business.id">{{business.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

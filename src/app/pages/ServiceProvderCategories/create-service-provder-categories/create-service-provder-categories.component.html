@@ -1,0 +1,19 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <h1 class="text-center">Create Service Provider Categories</h1>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required>
+    </mat-form-field>
+
+    <div class="example-full-width">
+        <input type="file" id="thumnailImagePath" formControlName="thumnailImagePath" (change)="onchange($event)"
+            accept="image/*">
+        <img width="200" height="200" src="{{logoBas64}}" />
+    </div>
+
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

@@ -1,0 +1,190 @@
+<mat-drawer-container>
+    <mat-drawer mode="side" [(opened)]="opened">
+        <div class="wrapper">
+            <div class="header">
+                <img src="../../../assets/images/logo.png" alt=""><span>Admin Panel</span>
+            </div>
+            <div class="menu">
+                <a><i class="fa fa-dashboard"></i>
+                    Dashboard</a>
+                <!-- Checkbox + Label -->
+                <!-- <input type="checkbox" id="toggle1">
+                <label for="toggle1"><i class="fa fa-plus-circle"></i> Content</label>
+                <div class="dropdown-content">
+                    <a routerLink="/service-provider-business-tags-list"><span><i class="fa fa-envelope"
+                                aria-hidden="true"></i> SP Business Tags</span></a>
+                    <a routerLink="/service-provider-sub-payment-list"><span><i class="fa fa-percent"
+                                aria-hidden="true"></i> S P Sub payments</span></a>
+                    <a href="#"><span><i class="fa fa-list-alt" aria-hidden="true"></i> Categories</span></a>
+                    <a href="#"><span><i class="fa fa-archive" aria-hidden="true"></i> Packages</span></a>
+                    <a href="#"><span><i class="fa fa-map" aria-hidden="true"></i> Locations</span></a>
+                    <a href="#"><span><i class="fa fa-book" aria-hidden="true"></i> Amenities</span></a>
+                    <a href="#"><span><i class="fa fa-user-circle-o" aria-hidden="true"></i> Customer Fields</span></a>
+                    <a href="#"><span><i class="fa fa-credit-card" aria-hidden="true"></i> Payment History</span></a>
+                    <a href="#"><span><i class="fa fa-book" aria-hidden="true"></i> All Reviews</span></a>
+                </div> -->
+                <input type="checkbox" id="toggle2">
+                <label for="toggle2"><i class="fa fa-sliders"></i> Masters</label>
+                <!-- Dropdown Content -->
+                <div class="dropdown-content">
+
+                    <a routerLink="admin/adds-details"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            Adds</span></a>
+
+                    <a routerLink="admin/business-register-details"><span><i class="fa fa-pencil-square-o"
+                                aria-hidden="true"></i>
+                            Lead Details</span></a>
+                    <a routerLink="admin/plan-details"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            Packages</span></a>
+                    <a routerLink="admin/badge-list"><span><i class="fa fa-picture-o" aria-hidden="true"></i>
+                            Badge</span></a>
+                    <a routerLink="admin/service-provider-sub-payment-list"><span><i class="fa fa-picture-o"
+                                aria-hidden="true"></i>
+                            Sub-Payment</span></a>
+                    <a routerLink="admin/service-provider-category-list"><span><i class="fa fa-globe"
+                                aria-hidden="true"></i> Category</span></a>
+                    <a routerLink="admin/service-provider-category-service-list"><span><i class="fa fa-search-plus"
+                                aria-hidden="true"></i> Category Service</span></a>
+                    <a routerLink="admin/service-provider-service-list"><span><i class="fa fa-envelope"
+                                aria-hidden="true"></i> Service</span></a>
+                    <a routerLink="admin/country-list"><span><i class="fa fa-paypal" aria-hidden="true"></i>
+                            Country</span></a>
+                    <a routerLink="admin/customer-list"><span><i class="fa fa-caret-square-o-down"
+                                aria-hidden="true"></i>
+                            Cutomer</span></a>
+                    <a routerLink="admin/lead-position-range-details"><span><i class="fa fa-caret-square-o-down"
+                                aria-hidden="true"></i>
+                            Lead Range</span></a>
+
+                    <a routerLink="admin/organization-list"><span><i class="fa fa-laptop" aria-hidden="true"></i>
+                            Organistaion</span></a>
+                    <a routerLink="admin/payment-mode-list"><span><i class="fa fa-server" aria-hidden="true"></i>
+                            PaymentMode</span></a>
+                    <a routerLink="admin/service-provider-business-tags-list"><span><i class="fa fa-cog"
+                                aria-hidden="true"></i> Business tag</span></a>
+                    <a routerLink="admin/service-provider-badges-list"><span><i class="fa fa-cog"
+                                aria-hidden="true"></i> Badges</span></a>
+                    <a routerLink="admin/state-list"><span><i class="fa fa-cog" aria-hidden="true"></i> State</span></a>
+
+                    <a routerLink="admin/BusinessList"><span><i class="fa fa-cog" aria-hidden="true"></i>
+                            BusinessList</span></a>
+                    <a routerLink="admin/CityList"><span><i class="fa fa-cog" aria-hidden="true"></i>
+                            City</span></a>
+                    <a routerLink="admin/CityareaList"><span><i class="fa fa-cog" aria-hidden="true"></i>
+                            City Area</span></a>
+                    <a routerLink="admin/CityServiceProviderCategoryList"><span><i class="fa fa-cog"
+                                aria-hidden="true"></i>
+                            Provider Category</span></a>
+                    <a routerLink="admin/ServiceProviderList"><span><i class="fa fa-cog" aria-hidden="true"></i>
+                            Service Provider</span></a>
+                    <a routerLink="admin/service-provider-sub-category-list"><span><i class="fa fa-cog"
+                                aria-hidden="true"></i>
+                            Subcategory</span></a>
+                    <a routerLink="admin/aminities-list"><span><i class="fa fa-cog" aria-hidden="true"></i>
+                            Amities</span></a>
+                    <a routerLink="admin/offer-list"><span><i class="fa fa-cog" aria-hidden="true"></i>
+                            Offer</span></a>
+                    <a routerLink="admin/service-provider-review-list"><span><i class="fa fa-cog"
+                                aria-hidden="true"></i>
+                            Service Review</span></a>
+                    <a routerLink="admin/service-provider-category-service-list"><span><i class="fa fa-cog"
+                                aria-hidden="true"></i>
+                            Service</span></a>
+                    <a routerLink="admin/service-provider-subscription-list"><span><i class="fa fa-cog"
+                                aria-hidden="true"></i>
+                            Category Service</span></a>
+                    <a routerLink="admin/custom-field-list"><span><i class="fa fa-cog" aria-hidden="true"></i>
+                            Customer Field</span></a>
+                </div>
+                <!-- Checkbox + Label -->
+                <input type="checkbox" id="toggle3">
+                <label for="toggle3"><i class="fa fa-envelope-o"></i> Email & Messaging</label>
+                <!-- Dropdown Content -->
+                <div class="dropdown-content">
+                    <a href="#"><span><i class="fa fa-commenting-o" aria-hidden="true"></i> Personal Message</span></a>
+                    <a href="#"><span><i class="fa fa-envelope" aria-hidden="true"></i> Email Tracker</span></a>
+                    <a href="#"><span><i class="fa fa-reply-all" aria-hidden="true"></i> Bulk Email</span></a>
+                    <a href="#"><span><i class="fa fa-pencil" aria-hidden="true"></i> Send Newsletter</span></a>
+                    <a href="#"><span><i class="fa fa-file" aria-hidden="true"></i> Edit Email Text</span></a>
+                    <a href="#"><span><i class="fa fa-envelope-o" aria-hidden="true"></i> Debug Email</span></a>
+                </div>
+                <!-- Checkbox + Label -->
+                <input type="checkbox" id="toggle4">
+                <label for="toggle4"><i class="fa fa-user"></i> Manage Users</label>
+                <!-- Dropdown Content -->
+                <div class="dropdown-content">
+                    <a href="#"><span><i class="fa fa-users" aria-hidden="true"></i> All Users</span></a>
+                    <a href="#"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Profile</span></a>
+                </div>
+
+                <!-- Checkbox + Label -->
+                <input type="checkbox" id="toggle5">
+                <label for="toggle5"><i class="fa fa-tags"></i> Blog/News/Article</label>
+                <!-- Dropdown Content -->
+                <div class="dropdown-content">
+                    <a href="#"><span><i class="fa fa-book" aria-hidden="true"></i> All Posts</span></a>
+                    <a href="#"><span><i class="fa fa-newspaper-o" aria-hidden="true"></i> New Posts</span></a>
+                </div>
+                <!-- Checkbox + Label -->
+                <input type="checkbox" id="toggle6">
+                <label for="toggle6"><i class="fa fa-cog"></i> System</label>
+                <!-- Dropdown Content -->
+                <div class="dropdown-content">
+                    <a href="#"><span><i class="fa fa-language" aria-hidden="true"></i> Edit Language</span></a>
+                    <a href="#"><span><i class="fa fa-upload" aria-hidden="true"></i> Upload</span></a>
+                    <a href="#"><span><i class="fa fa-commenting-o" aria-hidden="true"></i> Themes</span></a>
+                    <a href="#"><span><i class="fa fa-database" aria-hidden="true"></i> Manage Backup</span></a>
+                    <a href="#"><span><i class="fa fa-sitemap" aria-hidden="true"></i> Site Map</span></a>
+                    <a href="#"><span><i class="fa fa-file-image-o" aria-hidden="true"></i> Clear Unused
+                            Images</span></a>
+                    <a href="#"><span><i class="fa fa-file-o" aria-hidden="true"></i> File Manager</span></a>
+                    <a href="#"><span><i class="fa fa-database" aria-hidden="true"></i> My Admin</span></a>
+                </div>
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-grid-list cols="1">
+            <div class="example-sidenav-content">
+                <i mat-button (click)="opened=!opened" class="fa fa-bars" aria-hidden="true"></i>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="user_img">
+                                <img src="../../../assets/images/nophoto-male.jpg" alt="">
+                                <span>Logged in as : <a>Madhusudhan</a></span>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <nav class="navbar navbar-expand-lg pull-right">
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav mr-auto loginDetails">
+                                        <li clas="nav-item">
+                                            <a class="nav-link new-post-link" routerLink="admin/ServiceProviderList">
+                                                <span class="fa fa-plus"></span>
+                                                New Business </a>
+                                        </li>
+                                        <li clas="nav-item">
+                                            <a class="nav-link new-post-link">
+                                                <span class="fa fa-laptop"></span>
+                                                Visit Site</a>
+                                        </li>
+                                        <li clas="nav-item">
+                                            <a (click)="SignOut()" class="nav-link new-post-link">
+                                                <span class="fa fa-sign-in"></span>
+                                                Logout</a>
+                                        </li>
+                                        <li><a class="dropdown-item"></a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </mat-grid-list>
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,92 @@
+/* dropdown toggle css */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* Style the label as the dropdown button */
+label {
+    display: inline-block;
+    cursor: pointer;
+    padding: 14px;
+    color: #fff;
+    transition: all 0.4s;
+    width: 100%;
+    overflow: hidden;
+}
+
+.menu a {
+    display: inline-block;
+    cursor: pointer;
+    padding: 14px;
+    color: #fff;
+    transition: all 0.4s;
+    width: 100%;
+}
+
+
+.menu a:hover {
+    background-color: white;
+    color: #007bff;
+}
+
+label:hover {
+    background-color: white;
+    color: #007bff;
+}
+
+/* Style the caret icon */
+label::after {
+    content: '▼';
+    /* Unicode character for down arrow */
+    transition: transform 0.3s ease;
+    text-align: right;
+    float: right;
+    transition: all 0.5s ease-in-out;
+}
+
+/* Rotate the caret when the checkbox is checked */
+input:checked+label::after {
+    transform: rotateX(180deg);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hide the dropdown by default */
+.dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    transition: all 0.8s ease-in-out;
+}
+
+
+/* Show the dropdown when the checkbox is checked */
+input:checked+label+.dropdown-content {
+    max-height: 1000px;
+    /* Adjust to a suitable maximum height */
+}
+
+
+/* Style the dropdown content */
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content a span {
+    margin-left: 26px;
+}
+
+/* Hover effect on dropdown items */
+.dropdown-content a:hover {
+    background-color: #fff;
+    color: #007b;
+}
+
+.menu_list {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}

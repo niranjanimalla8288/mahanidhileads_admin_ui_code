@@ -1,0 +1,56 @@
+/* Adjust styles for the mat-tab-group */
+mat-tab-group {
+    margin-top: 20px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+/* Set styles for mat-tab labels */
+.mat-tab-label {
+    min-width: 120px;
+    /* Adjust as needed */
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+    height: 0px;
+    margin-top: -20px;
+}
+
+/* Add some spacing between the form fields */
+/* mat-form-field {
+    gap: 20px;
+  } */
+
+/* Style form actions at the bottom of each tab */
+.action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* Add some padding to the form content */
+form {
+    padding: 20px;
+}
+
+/* Optionally style the cancel and save buttons */
+button[type="button"] {
+    margin-right: 10px;
+}
+
+/* Style the mat-tab-body content */
+mat-tab-body {
+    padding: 20px;
+}
+
+.image img {
+    background-image: url("../../../../assets/images/default_image.png");
+    width: 200px;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+}

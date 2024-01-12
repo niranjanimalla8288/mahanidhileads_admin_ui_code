@@ -1,0 +1,17 @@
+mat-form-field {
+    width: 100%;
+}
+
+form {
+    padding: 20px;
+}
+
+.baseImage {
+    background-image: url("../../../../assets/images/default-image2.jpg");
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 150px;
+}

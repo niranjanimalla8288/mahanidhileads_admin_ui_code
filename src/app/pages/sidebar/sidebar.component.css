@@ -1,0 +1,91 @@
+@import url("../../../css/side_menu_dropdown.css");
+@import url("../../../css/dashboard.css");
+
+mat-drawer {
+    width: 250px;
+    background-color: var(--dark_blue);
+    height: 100vh;
+    position: fixed;
+    scrollbar-width: thin;
+    scrollbar-color: #4d7fff #ddd;
+}
+
+
+mat-drawer .wrapper .header {
+    background-color: var(--light_white);
+    padding: 10px;
+    text-align: center;
+}
+
+mat-drawer::-webkit-scrollbar {
+    width: 3px;
+}
+
+.wrapper::-webkit-scrollbar {
+    width: 3px;
+}
+
+nav ul li a:hover {
+    cursor: pointer;
+}
+
+/* Track */
+.wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.wrapper::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+    width: 40px;
+}
+
+mat-drawer .wrapper .header span {
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: 'Open Sans';
+    position: relative;
+}
+
+mat-list-item button {
+    color: white;
+}
+
+mat-expansion-panel {
+    background-color: transparent;
+    border: none;
+}
+
+mat-panel-title {
+    color: white;
+}
+
+.mat-expansion-indicator::after {
+    color: white;
+
+}
+
+.loginDetails li a {
+    color: rgb(129 86 255);
+}
+
+.loginDetails li a .fa {
+    color: rgb(129 86 255);
+}
+
+.user_img img {
+    width: 47px;
+    margin: 10px 0 0 20px;
+    border-radius: 50%;
+}

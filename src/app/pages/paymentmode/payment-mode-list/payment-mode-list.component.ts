@@ -70,10 +70,24 @@ export class PaymentModeListComponent implements OnInit {
   }
 
   deletePaymentDetails(id: number) {
-    this._Service.deletePaymentMode(id).subscribe((data: any) => {
-      this._coreService.openSnackBar('Payment Details deleted!', 'done');
-    });
+    this._Service.deletePaymentMode(id).subscribe(
+      (data: any) => {
+        this._coreService.openSnackBar('Payment Details deleted!', 'done');
+      },
+      (error: any) => {
+        if (error.status === 404) {
+          console.error('Payment details not found:', error);
+          this._coreService.openSnackBar('Payment details not found.', 'error');
+        } else if (error.status === 401) {
+          console.error('Unauthorized: Please log in.', error);
+        } else {
+          console.error('Error deleting payment details:', error);
+          this._coreService.openSnackBar('Failed to delete payment details. Please try again.', 'error');
+        }
+      }
+    );
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -88,5 +102,9 @@ export class PaymentModeListComponent implements OnInit {
         }
       },
     });
+  }
+  refreshList() {
+    this._coreService.openSnackBar('Packages Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

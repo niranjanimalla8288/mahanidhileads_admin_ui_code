@@ -41,6 +41,10 @@ i {
     padding-left: 10px;
 }
 
+.create_btn i {
+    color: black;
+}
+
 .icon_header i {
     margin-top: 6px;
     font-size: 20px;

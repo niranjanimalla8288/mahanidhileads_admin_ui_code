@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from 'src/app/core/core.service';
 import { PlanService } from 'src/app/services/plan.service';
@@ -25,8 +25,8 @@ export class CoustomerComponent implements OnInit {
 
     this.customerForm = this._fb.group({
       id: '0',
-      name: '',
-      mobileNumber: '',
+      name: ['', [Validators.required]],
+      mobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"), Validators.minLength, Validators.maxLength]],
       loginOtp: ''
 
     });
@@ -41,26 +41,41 @@ export class CoustomerComponent implements OnInit {
           .updateCustomer(this.data.id, this.customerForm.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Employee detail updated!');
+              this._coreService.openSnackBar('Customer detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
               console.error(err);
+
+              // Handle specific error cases here
+              if (err.status === 404) {
+                this._coreService.openSnackBar('Customer not found!', 'error');
+              } else {
+                this._coreService.openSnackBar('Error updating Customer detail.', 'error');
+              }
             },
           });
       } else {
         this._planService.createCustomer(this.customerForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Customer added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
             console.error(err);
+
+            // Handle specific error cases here
+            if (err.status === 400) {
+              this._coreService.openSnackBar('Bad request. Please check your input.', 'error');
+            } else {
+              this._coreService.openSnackBar('Error adding Customer.', 'error');
+            }
           },
         });
       }
     }
   }
+
 
   ToModel(formData: any) {
 

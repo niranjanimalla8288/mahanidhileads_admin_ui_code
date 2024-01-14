@@ -11,7 +11,10 @@
                 <div class="col-md-6">
                     <div class="create_btn">
                         <button mat-raised-button (click)="openAddEditEmpForm()">
-                            ADD Organization
+                            <i class="fa fa-plus" aria-hidden="true"></i> ADD Organization
+                        </button>
+                        <button mat-raised-button (click)="refreshList()">
+                            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh List
                         </button>
                     </div>
                 </div>
@@ -66,7 +69,7 @@
                             <button mat-icon-button color="primary" (click)="openEditForm(row)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button color="warn" (click)="deleteEmployee(row.id)">
+                            <button mat-icon-button color="warn" (click)="deleteOrganization(row.id)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </td>

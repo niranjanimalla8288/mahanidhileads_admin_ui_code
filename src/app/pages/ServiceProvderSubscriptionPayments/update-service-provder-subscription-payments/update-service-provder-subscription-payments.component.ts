@@ -1,8 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { CoreService } from 'src/app/core/core.service';
+import { Serviceprovider } from 'src/app/model/serviceprovider';
+import { Serviceprovidersubcategory } from 'src/app/model/serviceprovidersubcategory';
+import { Serviceprovidersubscription } from 'src/app/model/serviceprovidersubscription';
 import { Serviceprovidersubscriptionspayment } from 'src/app/model/serviceprovidersubscriptionspayment';
+import { PaymentmodeService } from 'src/app/services/paymentmode.service';
+import { ServiceproviderService } from 'src/app/services/serviceprovider.service';
+import { ServiceprovidersubscriptionService } from 'src/app/services/serviceprovidersubscription.service';
 import { ServiceprovidersubscriptionspaymentService } from 'src/app/services/serviceprovidersubscriptionspayment.service';
 
 @Component({
@@ -14,9 +21,16 @@ export class UpdateServiceProvderSubscriptionPaymentsComponent implements OnInit
 
   formGroup!: FormGroup;
   serviceProviderModel: Serviceprovidersubscriptionspayment = new Serviceprovidersubscriptionspayment();
+  serviceProviderSubcategoryModel: Serviceprovidersubscription = new Serviceprovidersubscription();
+  serviceProvider: any[] = [];
+  serviceProviderSubscriptionData: any[] = [];
+  paymentdata: any[] = [];
   constructor(
     private _fb: FormBuilder,
+    private _serviceProvider: ServiceproviderService,
+    private _paymentService: PaymentmodeService,
     public _Service: ServiceprovidersubscriptionspaymentService,
+    private _serviceProviderSubscription: ServiceprovidersubscriptionService,
     private _dialogRef: MatDialogRef<UpdateServiceProvderSubscriptionPaymentsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _coreService: CoreService) {
@@ -32,6 +46,18 @@ export class UpdateServiceProvderSubscriptionPaymentsComponent implements OnInit
   }
   ngOnInit(): void {
     this.formGroup.patchValue(this.data);
+    this._serviceProvider.getServiceProviders().subscribe((data: any) => {
+      this.serviceProvider = data;
+      console.log(data, "service provider data");
+    });
+    this._serviceProviderSubscription.getServiceprovidersubscriptions().subscribe((data: any) => {
+      this.serviceProviderSubscriptionData = data;
+      console.log(data, "service service subcription");
+    });
+    this._paymentService.getPaymentModes().subscribe((data: any) => {
+      this.paymentdata = data;
+      console.log(data, "payment data");
+    });
   }
 
   getPlanList() {
@@ -91,6 +117,21 @@ export class UpdateServiceProvderSubscriptionPaymentsComponent implements OnInit
     this.serviceProviderModel.paymentDate = formData.paymentDate;
     this.serviceProviderModel.transactionReference = formData.transactionReference;
     // this.serviceProviderModel.isBannerAdd = formData.isBannerAdd == 0 ? false : true;
+  }
+
+  getServiceProviderName(serviceProviderId: number): string {
+    const Service = this.serviceProvider.find(s => s.Id === serviceProviderId);
+    return Service ? Service.name : '';
+  }
+  serviceProviderEvent(event: MatSelectChange): void {
+    console.log("Select City ID: ", event.value);
+  }
+
+  serviceProviderSubscriptionEvent(event: MatSelectChange): void {
+    console.log("Select Subcription", event.value);
+  }
+  paymentMode(event: MatSelectChange): void {
+    console.log("Select Payment ", event.value);
   }
 }
 

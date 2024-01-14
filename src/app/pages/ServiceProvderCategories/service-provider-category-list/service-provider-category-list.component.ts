@@ -70,12 +70,37 @@ export class ServiceProviderCategoryListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  // deleteServiceProviderCategory(id: number) {
+  //   this._planService.deleteServiceprovidercategory(id).subscribe((data: any) => {
+  //     this.getPlanList();
+  //     this._coreService.openSnackBar('Employee deleted!', 'done');
+  //   });
+  // }
   deleteServiceProviderCategory(id: number) {
-    this._planService.deleteServiceprovidercategory(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
-    });
+    const confirmDelete = confirm('Are you sure you want to delete this employee?');
+    if (confirmDelete) {
+
+      this._planService.deleteServiceprovidercategory(id).subscribe(
+        (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Employee deleted!', 'done');
+        },
+        (error: any) => {
+          console.error(error);
+
+          // Handle specific error cases here
+          if (error.status === 404) {
+            this._coreService.openSnackBar('Service Provider Category not found!', 'error');
+          } else if (error.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please log in.', 'error');
+          } else {
+            this._coreService.openSnackBar('Error deleting Service Provider Category. Please try again later.', 'error');
+          }
+        }
+      );
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -95,5 +120,8 @@ export class ServiceProviderCategoryListComponent implements OnInit {
 
   // image 
   // Image Convert to Base64
-
+  refreshList() {
+    this._coreService.openSnackBar('Service Provider Category Details Refreshed', 'done');
+    this.getPlanList();
+  }
 }

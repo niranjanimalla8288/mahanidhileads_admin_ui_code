@@ -37,6 +37,14 @@ i {
     padding-left: 10px;
 }
 
+.create_btn i {
+    color: black;
+}
+
+.create_btn button {
+    margin-left: 10px;
+}
+
 .icon_header i {
     margin-top: 6px;
     font-size: 20px;

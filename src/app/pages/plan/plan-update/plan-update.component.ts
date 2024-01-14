@@ -1,6 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { CoreService } from 'src/app/core/core.service';
@@ -26,12 +26,11 @@ export class PlanUpdateComponent implements OnInit {
     private _coreService: CoreService) {
     this.planForm = this._fb.group({
       id: '',
-      name: '',
-      cost: '',
-      durationInMonths: '',
-      isBannerAdd: '',
-      positionInListing: '',
-      serviceDescription: ''
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      cost: ['', [Validators.required, Validators.min(0)]],
+      durationInMonths: ['', [Validators.required, Validators.min(1)]],
+      serviceDescription: ['', [Validators.maxLength(500)]],
+      positionInListing: ['', [Validators.required, Validators.min(1)]],
     });
   }
   ngOnInit(): void {
@@ -47,47 +46,86 @@ export class PlanUpdateComponent implements OnInit {
       console.log(res);
     });
   }
+  // onSubmit() {
+  //   this.toModel(this.planForm.value);
+  //   if (this.planForm.valid) {
+  //     if (this.data) {
+
+  //       this._planService
+  //         .updatePlan(this.data.id, this.planForm.value)
+  //         .subscribe({
+
+  //           next: (val: any) => {
+  //             this._coreService.openSnackBar('Plan detail updated!');
+  //             this._dialogRef.close(true);
+  //           },
+  //           error: (err: any) => {
+  //             console.error(err);
+  //           },
+
+  //         });
+  //     } else {
+  //       console.log("in add");
+  //       this.toModel(this.planForm.value);
+  //       console.log(this.planModel);
+  //       this._planService.createPlan(this.planModel).subscribe({
+  //         next: (val: any) => {
+  //           this._coreService.openSnackBar('Plan added successfully');
+  //           this._dialogRef.close(true);
+  //         },
+  //         error: (err: any) => {
+  //           console.error(err);
+  //         },
+  //       });
+  //     }
+  //   }
+  // }
   onSubmit() {
     this.toModel(this.planForm.value);
+
     if (this.planForm.valid) {
       if (this.data) {
-
-        this._planService
-          .updatePlan(this.data.id, this.planForm.value)
-          .subscribe({
-
-            next: (val: any) => {
-              this._coreService.openSnackBar('Plan detail updated!');
-              this._dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-            },
-
-          });
-      } else {
-        console.log("in add");
-        this.toModel(this.planForm.value);
-        console.log(this.planModel);
-        this._planService.createPlan(this.planModel).subscribe({
+        this._planService.updatePlan(this.data.id, this.planForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Plan added successfully');
+            this._coreService.openSnackBar('Package detail updated!');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
             console.error(err);
+
+            // Handle specific error cases here
+            if (err.status === 404) {
+              this._coreService.openSnackBar('Package Details not found!', 'error');
+            } else {
+              this._coreService.openSnackBar('Error updating Package detail.', 'error');
+            }
+          },
+        });
+      } else {
+        console.log("in add");
+        this.toModel(this.planForm.value);
+        console.log(this.planModel);
+
+        this._planService.createPlan(this.planModel).subscribe({
+          next: (val: any) => {
+            this._coreService.openSnackBar('Package added successfully');
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+
+            // Handle specific error cases here
+            if (err.status === 400) {
+              this._coreService.openSnackBar('Bad request. Please check your input.', 'error');
+            } else {
+              this._coreService.openSnackBar('Error! Please check your details, Please enter Valid details.', 'error');
+            }
           },
         });
       }
     }
   }
-  // onSubmit() {
-  //   this._planService.updatePlan(this.data.id, this.planForm.value).subscribe((data: any) => {
-  //     this._coreService.openSnackBar('Successfully Updated Plan Data');
-  //     this._dialogRef.close(true);
-  //     this.getPlanList();
-  //   });
-  // }
+
 
   toModel(formData: any) {
 

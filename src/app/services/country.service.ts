@@ -24,10 +24,15 @@ export class CountryService {
     return this.http.post(this.apiurl + "Countries/", data);
   }
 
-  updateCountry(id: number, data: Country): Observable<any> {
-    return this.http.put(`${this.apiurl + "Countries"}/${data.id}`, data);
+  // updateCountry(id: number, data: Country): Observable<any> {
+  //   return this.http.put(`${this.apiurl + "Countries"}/${data.id}`, data);
+  // }
+  // updateCountry(data: Country) {
+  //   return this.http.put(this.apiurl + "Countries", data);
+  // }
+  updaupdateCountry(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiurl + "Countries"}/${id}`, data);
   }
-
   deleteCountry(id: number) {
     return this.http.delete(this.apiurl + "Countries" + "/" + id);
   }

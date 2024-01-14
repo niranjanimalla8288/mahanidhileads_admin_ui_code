@@ -12,6 +12,7 @@
                         </mat-option>
 
                     </mat-select>
+                    <mat-error *ngIf="addForm.get('cityId')?.hasError('required')">cityId is required</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-12">

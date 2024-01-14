@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { CoreService } from 'src/app/core/core.service';
@@ -26,10 +26,10 @@ export class CreateLeadpositionRangeComponent {
 
     this.leadRange = this._fb.group({
       id: '0',
-      positionName: '',
-      price: '',
-      positionFrom: '',
-      positionTo: ''
+      positionName: ['', Validators.required],
+      price: ['', [Validators.required, Validators.minLength(0)]],
+      positionFrom: [null, Validators.required],
+      positionTo: [null, Validators.required],
 
     });
   }
@@ -48,26 +48,43 @@ export class CreateLeadpositionRangeComponent {
           .updateLPR(this.data.id, this.leadRange.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('City detail updated!');
+              // Successful update
+              this._coreService.openSnackBar('Lead Position Range detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
+              // Handle error
               console.error(err);
+
+              if (err.status === 404) {
+                this._coreService.openSnackBar('Lead Position Range not found!', 'error');
+              } else {
+                this._coreService.openSnackBar('Error updating Lead Position Range detail.', 'error');
+              }
             },
           });
       } else {
         this._planService.createLPR(this.leadRange.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('City added successfully');
+            // Successful creation
+            this._coreService.openSnackBar('Lead Position Range added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
+            // Handle error
             console.error(err);
+
+            if (err.status === 400) {
+              this._coreService.openSnackBar('Bad request. Please check your input.', 'error');
+            } else {
+              this._coreService.openSnackBar('Error adding Lead Position Range.', 'error');
+            }
           },
         });
       }
     }
   }
+
 
   ToModel(formData: any) {
     if (this.data) {

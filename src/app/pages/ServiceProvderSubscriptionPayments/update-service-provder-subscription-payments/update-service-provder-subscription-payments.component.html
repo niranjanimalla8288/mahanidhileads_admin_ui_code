@@ -2,24 +2,36 @@
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
         <h1 class="text-center">Service Provider Sub Categories</h1>
         <mat-form-field class="example-full-width">
-            <mat-label>serviceProviderId</mat-label>
-            <input matInput formControlName="serviceProviderId">
+            <mat-label>serviceProvider</mat-label>
+            <mat-select formControlName="serviceProviderId" (selectionChange)="serviceProviderEvent($event)" required>
+                <mat-option *ngFor="let spdata of serviceProvider" [value]="spdata.id">{{spdata.businessName}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <mat-label>serviceProviderSubscriptionId</mat-label>
-            <input matInput formControlName="serviceProviderSubscriptionId">
+            <mat-label>Service Provider Subscription</mat-label>
+            <mat-select formControlName="serviceProviderSubscriptionId"
+                (selectionChange)="serviceProviderSubscriptionEvent($event)" required>
+                <mat-option *ngFor="let spdata of serviceProviderSubscriptionData" [value]="spdata.id">{{spdata.name}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <mat-label>paidAmount</mat-label>
+            <mat-label>Paid Amount</mat-label>
             <input matInput formControlName="paidAmount">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <mat-label>paymentModeId</mat-label>
-            <input matInput formControlName="paymentModeId">
+            <mat-label>Payment Mode</mat-label>
+            <mat-select formControlName="paymentModeId" (selectionChange)="paymentMode($event)" required>
+                <mat-option *ngFor="let spdata of paymentdata" [value]="spdata.id">{{spdata.name}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
-        <mat-form-field class="example-full-width">
-            <mat-label>paymentDate</mat-label>
-            <input matInput formControlName="paymentDate">
+        <mat-form-field>
+            <mat-label>Payment Date</mat-label>
+            <input matInput formControlName="paymentDate" placeholder="Select Payment Date" [matDatepicker]="picker1" />
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>transactionReference</mat-label>

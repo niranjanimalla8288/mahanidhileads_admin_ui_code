@@ -58,6 +58,7 @@ import { CreateLeadPositionComponent } from './pages/LeadPosition/create-lead-po
 import { LeadPositionRangeListComponent } from './pages/LeadPositionRange/lead-position-range-list/lead-position-range-list.component';
 import { CreateLeadpositionRangeComponent } from './pages/LeadPositionRange/create-leadposition-range/create-leadposition-range.component';
 import { BusinessRegisterDetailsComponent } from './pages/business-register-details/business-register-details.component';
+import { AlertPageComponent } from './alert-page/alert-page.component';
 
 // canActivate: [AuthGuard], data: { expectedRole: Role.Admin } ,
 // children: [
@@ -189,6 +190,8 @@ const routes: Routes = [
 
       { path: 'lead-position-range-details', component: LeadPositionRangeListComponent },
       { path: 'lead-position-range-create', component: CreateLeadpositionRangeComponent },
+
+      { path: 'alert-page', component: AlertPageComponent },
 
     ],
   },

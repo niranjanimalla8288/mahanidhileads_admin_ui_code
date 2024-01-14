@@ -1,17 +1,13 @@
 <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
-    <h1 class="text-center">Create Service Provider Categorie services</h1>
+    <h1 class="text-center">Create Service Provider Category Services</h1>
 
     <mat-form-field class="example-full-width">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" required>
+        <mat-error *ngIf="serviceForm.get('name')?.hasError('required')">
+            Name is required
+        </mat-error>
     </mat-form-field>
-
-
-    <!-- <mat-form-field class="example-full-width">
-        <mat-label>Thumbnail Image Path</mat-label>
-       
-    </mat-form-field> -->
-
 
     <div mat-dialog-actions class="action">
         <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>

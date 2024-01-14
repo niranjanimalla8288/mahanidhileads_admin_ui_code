@@ -89,11 +89,39 @@ export class AddsDetailsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  // deleteEmployee(id: number) {
+  //   this.addService.deleteAdds(id).subscribe((data: any) => {
+  //     this.getPlanList();
+  //     this._coreService.openSnackBar('Service Provider deleted!', 'done');
+  //   });
+  // }
   deleteEmployee(id: number) {
-    this.addService.deleteAdds(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Service Provider deleted!', 'done');
-    });
+    const confirmDelete = confirm('Are you sure you want to delete this employee?');
+
+    if (confirmDelete) {
+      this.addService.deleteAdds(id).subscribe(
+        (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Employee deleted!', 'done');
+        },
+        (error: any) => {
+          console.error(error);
+
+          // Handle specific error cases here
+          if (error.status === 404) {
+            // Handle not found error
+            this._coreService.openSnackBar('Employee not found!');
+          } else {
+            // Handle other errors
+            this._coreService.openSnackBar('Error deleting employee.');
+          }
+        }
+      );
+    }
+  }
+  refreshList() {
+    this._coreService.openSnackBar('Employee Details Refreshed', 'done');
+    this.getPlanList();
   }
 
   openAddEFormUpdate(data: any) {

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from 'src/app/core/core.service';
 import { PlanUpdateComponent } from '../../plan/plan-update/plan-update.component';
@@ -24,7 +24,7 @@ export class PaymentmodeComponent implements OnInit {
 
     this.paymentModeForm = this._fb.group({
       id: '0',
-      name: ''
+      name: ['', Validators.required]
 
     });
   }
@@ -38,24 +38,42 @@ export class PaymentmodeComponent implements OnInit {
           .updatePaymentMode(this.data.id, this.paymentModeForm.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Employee detail updated!');
+              this._coreService.openSnackBar('Pyament detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
-              console.error(err);
+              console.error('Error updating payment mode:', err);
+              // Add more specific error handling or display user-friendly error messages
+              if (err.status === 401) {
+                this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+              } else if (err.status === 404) {
+                this._coreService.openSnackBar('Pyament not found. Please check the details.');
+              } else {
+                this._coreService.openSnackBar('An error occurred while updating the payment mode. Please try again.');
+              }
             },
           });
       } else {
         this._planService.createPaymentMode(this.paymentModeForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Pyament added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
-            console.error(err);
+            console.error('Error creating payment mode:', err);
+            // Add more specific error handling or display user-friendly error messages
+            if (err.status === 401) {
+              this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+            } else if (err.status === 409) {
+              this._coreService.openSnackBar('Pyament already exists with the provided details.');
+            } else {
+              this._coreService.openSnackBar('An error occurred while adding the Pyament. Please try again.');
+            }
           },
         });
       }
+    } else {
+      this._coreService.openSnackBar('Invalid form. Please fill in all required fields.');
     }
   }
 

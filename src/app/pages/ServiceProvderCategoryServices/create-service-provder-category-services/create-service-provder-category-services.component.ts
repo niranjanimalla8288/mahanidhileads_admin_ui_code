@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from 'src/app/core/core.service';
 import { ServiceprovidercategoryserviceModel } from 'src/app/model/serviceprovidercategoryservice';
@@ -25,7 +25,8 @@ export class CreateServiceProvderCategoryServicesComponent implements OnInit {
     private _coreService: CoreService) {
     this.serviceForm = this._fb.group({
       id: '',
-      name: ''
+      name: ['', [Validators.required]],
+
 
     });
   }
@@ -41,39 +42,55 @@ export class CreateServiceProvderCategoryServicesComponent implements OnInit {
     });
   }
   onSubmit() {
-    this.toModel(this.serviceForm.value);
+    // this.toModel(this.serviceForm.value);
+
     if (this.serviceForm.valid) {
       if (this.data) {
         this._Service
           .updateServiceprovidercategory(this.data.id, this.serviceForm.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Plan detail updated!');
+              this._coreService.openSnackBar('Service Provider Category Service detail updated!');
               this._dialogRef.close(true);
               this.getPlanList();
             },
             error: (err: any) => {
               console.error(err);
+
+              // Handle specific error cases here
+              if (err.status === 404) {
+                this._coreService.openSnackBar('Service Provider Category Service not found!', 'error');
+              } else {
+                this._coreService.openSnackBar('Error updating Service Provider Category Service detail.', 'error');
+              }
             },
           });
       } else {
         console.log("in add");
-        this.toModel(this.serviceForm.value);
+        // this.toModel(this.serviceForm.value);
         console.log("hi");
-        this._Service.createServiceprovidercategory(this.serviceModel).subscribe({
+        this._Service.createServiceprovidercategory(this.serviceForm.value).subscribe({
           next: (val: any) => {
             this.serviceModel = val;
-            this._coreService.openSnackBar('Service  added successfully');
+            this._coreService.openSnackBar('Service Provider Category Service added successfully');
             this._dialogRef.close(true);
             this.getPlanList();
           },
           error: (err: any) => {
             console.error(err);
+
+            // Handle specific error cases here
+            if (err.status === 400) {
+              this._coreService.openSnackBar('Bad request. Please check your input.', 'error');
+            } else {
+              this._coreService.openSnackBar('Error adding Sesrvice Provider Category Service.', 'error');
+            }
           },
         });
       }
     }
   }
+
   // onSubmit() {
   //   this._planService.updatePlan(this.data.id, this.planForm.value).subscribe((data: any) => {
   //     this._coreService.openSnackBar('Successfully Updated Plan Data');
@@ -82,14 +99,14 @@ export class CreateServiceProvderCategoryServicesComponent implements OnInit {
   //   });
   // }
 
-  toModel(formData: any) {
+  // toModel(formData: any) {
 
-    if (this.data) {
-      this.serviceModel.id = formData.id;
-    }
-    this.serviceModel.name = formData.name;
+  //   if (this.data) {
+  //     this.serviceModel.id = formData.id;
+  //   }
+  //   this.serviceModel.name = formData.name;
 
-  }
+  // }
 
 
 }

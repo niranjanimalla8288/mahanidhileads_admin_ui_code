@@ -70,6 +70,7 @@ import { CreateLeadPositionComponent } from './pages/LeadPosition/create-lead-po
 import { LeadPositionRangeListComponent } from './pages/LeadPositionRange/lead-position-range-list/lead-position-range-list.component';
 import { CreateLeadpositionRangeComponent } from './pages/LeadPositionRange/create-leadposition-range/create-leadposition-range.component';
 import { BusinessRegisterDetailsComponent } from './pages/business-register-details/business-register-details.component';
+import { AlertPageComponent } from './alert-page/alert-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,7 +138,8 @@ import { BusinessRegisterDetailsComponent } from './pages/business-register-deta
     CreateLeadPositionComponent,
     LeadPositionRangeListComponent,
     CreateLeadpositionRangeComponent,
-    BusinessRegisterDetailsComponent
+    BusinessRegisterDetailsComponent,
+    AlertPageComponent
 
 
   ],

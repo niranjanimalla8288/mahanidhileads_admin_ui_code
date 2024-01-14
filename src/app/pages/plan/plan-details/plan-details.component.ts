@@ -8,6 +8,7 @@ import { CoreService } from 'src/app/core/core.service';
 import { PlanUpdateComponent } from '../plan-update/plan-update.component';
 import { Plan } from 'src/app/model/plan';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertPageComponent } from 'src/app/alert-page/alert-page.component';
 
 @Component({
   selector: 'app-plan-details',
@@ -73,20 +74,42 @@ export class PlanDetailsComponent implements OnInit {
     }
   }
 
-  deleteEmployee(id: number) {
-    this._planService.deletePlan(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
-    });
+  // deleteEmployee(id: number) {
+  //   this._planService.deletePlan(id).subscribe((data: any) => {
+  //     this.getPlanList();
+  //     this._coreService.openSnackBar('Employee deleted!', 'done');
+  //   });
+  // }
+  deletePlanDetails(id: number): void {
+    const confirmDelete = confirm('Are you sure you want to delete this employee?');
+
+    if (confirmDelete) {
+      this._planService.deletePlan(id).subscribe(
+        (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Employee deleted!', 'done');
+        },
+        (error: any) => {
+          console.error(error);
+
+          // Handle specific error cases here
+          if (error.status === 404) {
+            // Handle not found error
+            this._coreService.openSnackBar('Employee not found!', 'error');
+          } else {
+            // Handle other errors
+            this._coreService.openSnackBar('Error deleting employee.', 'error');
+          }
+        }
+      );
+    }
   }
 
   openEditForm(data: any) {
-
     console.log(data);
     console.log("Hi open edit form");
     const dialogRef = this._dialog.open(PlanUpdateComponent, {
       data,
-
     });
 
     dialogRef.afterClosed().subscribe({
@@ -98,5 +121,9 @@ export class PlanDetailsComponent implements OnInit {
     });
   }
 
+  refreshList() {
+    this._coreService.openSnackBar('Packages Details Refreshed', 'done');
+    this.getPlanList();
+  }
 
 }

@@ -92,12 +92,28 @@ export class OrganizationListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  deleteEmployee(id: number) {
-    this._planService.deleteOrganization(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
-    });
+  deleteOrganization(id: number) {
+    const deletemessage = confirm("Confirm Delete Organization Details");
+    if (deletemessage) {
+      this._planService.deleteOrganization(id).subscribe(
+        (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Organization deleted!', 'done');
+        },
+        (error: any) => {
+          console.error(error);
+
+          // Handle specific error cases here
+          if (error.status === 404) {
+            this._coreService.openSnackBar('Organization not found!', 'error');
+          } else {
+            this._coreService.openSnackBar('Error deleting organization.', 'error');
+          }
+        }
+      );
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -121,5 +137,10 @@ export class OrganizationListComponent implements OnInit {
   getCityName(cityId: number): string {
     const State = this.Cities.find(c => c.id === cityId);
     return State ? State.name : '';
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Organaization Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

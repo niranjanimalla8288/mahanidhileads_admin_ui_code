@@ -95,12 +95,33 @@ export class ServiceProviderSubscriptionPaymentsListComponent implements OnInit 
     }
   }
 
-  deleteServiceprovideSubscriptionpaymentDetails(id: number) {
-    this._Service.deleteServiceprovidersubscriptionspayment(id).subscribe((data: any) => {
-      this.getSPSPaymentList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
+  // deleteServiceprovideSubscriptionpaymentDetails(id: number) {
+  //   this._Service.deleteServiceprovidersubscriptionspayment(id).subscribe((data: any) => {
+  //     this.getSPSPaymentList();
+  //     this._coreService.openSnackBar('Employee deleted!', 'done');
 
-    });
+  //   });
+  // }
+  deleteServiceprovideSubscriptionpaymentDetails(id: number) {
+    const confirmDelete = confirm('Are you sure you want to delete this employee?');
+    if (confirmDelete) {
+      this._Service.deleteServiceprovidersubscriptionspayment(id).subscribe(
+        (data: any) => {
+          this.getSPSPaymentList();
+          this._coreService.openSnackBar('Employee deleted!', 'done');
+        },
+        (error: any) => {
+          console.error(error);
+
+          // Handle specific error cases here
+          if (error.status === 404) {
+            this._coreService.openSnackBar('Payment not found!', 'error');
+          } else {
+            this._coreService.openSnackBar('Error deleting payment.', 'error');
+          }
+        }
+      );
+    }
   }
 
   openEditForm(data: any) {
@@ -138,5 +159,10 @@ export class ServiceProviderSubscriptionPaymentsListComponent implements OnInit 
   getServiceProviderPaymentIdwithName(paymentModeId: number): string {
     const ServicePayment = this.serviceProviderPaymentModel.find(p => p.id === paymentModeId);
     return ServicePayment ? ServicePayment.name : '';
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Payment Details Refreshed', 'done');
+    this.getSPSPaymentList();
   }
 }

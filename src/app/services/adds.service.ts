@@ -34,7 +34,11 @@ export class AddsService {
   //   return this.http.delete(`${this.apiurl}?id=${id}`);
   // }
 
-  deleteAdds(id: number): Observable<any> {
-    return this.http.delete(`${this.apiurl}?id=${id}`);
+  // deleteAdds(id: number): Observable<any> {
+  //   return this.http.delete(`${this.apiurl}?id=${id}`);
+  // }
+
+  deleteAdds(id: number) {
+    return this.http.delete(this.apiurl + "Add/" + id);
   }
 }

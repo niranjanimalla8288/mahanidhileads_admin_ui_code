@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from 'src/app/core/core.service';
 import { PlanUpdateComponent } from '../../plan/plan-update/plan-update.component';
@@ -25,8 +25,8 @@ export class CreateServiceProvderCategoriesComponent implements OnInit {
 
     this.formGroup = this._fb.group({
       id: '0',
-      name: '',
-      thumnailImagePath: ''
+      name: ['', [Validators.required]],
+      thumnailImagePath: ['', [Validators.required]]
     });
   }
   ngOnInit(): void {
@@ -38,27 +38,41 @@ export class CreateServiceProvderCategoriesComponent implements OnInit {
     if (this.formGroup.valid) {
       this.formGroup.value.thumnailImagePath = this.logoBas64;
       if (this.data) {
-        // this.logoBas64 = this.data.thumnailImagePath;
         this._planService
           .updateServiceprovidercategory(this.data.id, this.formGroup.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Employee detail updated!');
+              this._coreService.openSnackBar('Service Provider Category detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
               console.error(err);
+
+              // Handle specific error cases here
+              if (err.status === 404) {
+                this._coreService.openSnackBar('Service Provider Category not found!', 'error');
+              } else if (err.status === 401) {
+                this._coreService.openSnackBar('Unauthorized. Please log in.', 'error');
+              } else {
+                this._coreService.openSnackBar('Error updating Service Provider Category. Please try again later.', 'error');
+              }
             },
           });
       } else {
-        // this.ToModel(this.formGroup.value);
         this._planService.createServiceprovidercategory(this.formGroup.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Service Provider Category added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
             console.error(err);
+
+            // Handle specific error cases here
+            if (err.status === 400) {
+              this._coreService.openSnackBar('Bad request. Please check your input.', 'error');
+            } else {
+              this._coreService.openSnackBar('Error adding Service Provider Category. Please try again later.', 'error');
+            }
           },
         });
       }

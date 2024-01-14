@@ -76,10 +76,26 @@ export class LeadPositionRangeListComponent {
   }
 
   deleteEmployee(id: number) {
-    this._planService.deleteLPR(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('LPR deleted!', 'done');
-    });
+    const deletge = confirm("Confirm Delete Lead Position Range Details");
+    if (deletge) {
+      this._planService.deleteLPR(id).subscribe(
+        (data: any) => {
+          // Successful deletion
+          this.getPlanList();
+          this._coreService.openSnackBar('LPR deleted!', 'done');
+        },
+        (error: any) => {
+          // Handle error
+          console.error(error);
+
+          if (error.status === 404) {
+            this._coreService.openSnackBar('LPR not found!', 'error');
+          } else {
+            this._coreService.openSnackBar('Error deleting LPR.', 'error');
+          }
+        }
+      );
+    }
   }
 
 
@@ -96,5 +112,9 @@ export class LeadPositionRangeListComponent {
         }
       },
     });
+  }
+  refreshList() {
+    this._coreService.openSnackBar('Lead Position Range Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from 'src/app/core/core.service';
 import { PlanService } from 'src/app/services/plan.service';
@@ -25,22 +25,21 @@ export class CountryComponent implements OnInit {
 
     this.countryForm = this._fb.group({
       id: '0',
-      name: '',
-      code: '',
-      currencyCode: '',
-      telecomeCode: '',
-      currencySymbol: ''
+      name: ['', [Validators.required]],
+      code: ['', [Validators.required]],
+      currencyCode: ['', [Validators.required, Validators.minLength(3), Validators.pattern('[A-Za-z0-9]+')]],
+      telecomeCode: ['', [Validators.required]],
+      currencySymbol: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
     });
   }
   ngOnInit(): void {
     this.countryForm.patchValue(this.data);
   }
   onSubmit() {
-    this.ToModel(this.countryForm.value);
     if (this.countryForm.valid) {
       if (this.data) {
         this._planService
-          .updateCountry(this.data.id, this.countryForm.value)
+          .updaupdateCountry(this.data.id, this.countryForm.value)
           .subscribe({
             next: (val: any) => {
               this._coreService.openSnackBar('Country detail updated!');
@@ -48,19 +47,32 @@ export class CountryComponent implements OnInit {
             },
             error: (err: any) => {
               console.error(err);
+
+              // Handle specific error cases here
+              if (err.status === 404) {
+                this._coreService.openSnackBar('Country not found!', 'error');
+              } else {
+                this._coreService.openSnackBar('Error updating country detail.', 'error');
+              }
             },
           });
-      }
-      else {
+      } else {
         console.log(this.countryModel);
         this._planService.createCountry(this.countryForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Country added successfully');
             this._dialogRef.close(true);
             console.log(val);
           },
           error: (err: any) => {
             console.error(err);
+
+            // Handle specific error cases here
+            if (err.status === 400) {
+              this._coreService.openSnackBar('Bad request. Please check your input.', 'error');
+            } else {
+              this._coreService.openSnackBar('Error adding country.', 'error');
+            }
           },
         });
       }
@@ -68,17 +80,18 @@ export class CountryComponent implements OnInit {
   }
 
 
-  ToModel(formData: any) {
 
-    if (this.data) {
-      this.countryModel.id = formData.id;
-    }
-    this.countryModel.name = formData.name;
-    this.countryModel.code = formData.code;
-    this.countryModel.currencyCode = formData.currencyCode;
-    this.countryModel.telecomeCode = formData.telecomeCode;
-    this.countryModel.currencySymbol = formData.currencySymbol;
-  }
+  // ToModel(formData: any) {
+
+  //   if (this.data) {
+  //     this.countryModel.id = formData.id;
+  //   }
+  //   this.countryModel.name = formData.name;
+  //   this.countryModel.code = formData.code;
+  //   this.countryModel.currencyCode = formData.currencyCode;
+  //   this.countryModel.telecomeCode = formData.telecomeCode;
+  //   this.countryModel.currencySymbol = formData.currencySymbol;
+  // }
 
 }
 

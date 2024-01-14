@@ -2,26 +2,41 @@
     <mat-form-field appearance="fill">
         <mat-label>Country Name</mat-label>
         <input matInput formControlName="name" placeholder="Enter Country Name" />
+        <mat-error *ngIf="countryForm.get('name')?.hasError('required')">Name is required</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Code</mat-label>
-        <input matInput formControlName="code" placeholder="Enter code" />
+        <input matInput formControlName="code" placeholder="Enter code" required minlength="3" maxlength="10" />
+        <mat-error *ngIf="countryForm.get('code')?.hasError('required')">Code is required</mat-error>
+        <mat-error *ngIf="countryForm.get('code')?.hasError('minlength')">Code must be at least 3 characters</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Currency Code</mat-label>
-        <input matInput formControlName="currencyCode" placeholder="Enter currency code" />
+        <input matInput formControlName="currencyCode" placeholder="Enter currency code" required minlength="3"
+            maxlength="45" />
+        <mat-error *ngIf="countryForm.get('currencyCode')?.hasError('required')">Currency Code is required</mat-error>
+        <mat-error *ngIf="countryForm.get('currencyCode')?.hasError('minlength')">Currency Code is must be minimumm
+            length 3 required</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Telecom Code</mat-label>
-        <input matInput formControlName="telecomeCode" placeholder="Enter telecome code" />
+        <input matInput formControlName="telecomeCode" placeholder="Enter telecom code" />
+        <mat-error *ngIf="countryForm.get('telecomeCode')?.hasError('required')">Telecom Code is required</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Currency Symbol</mat-label>
-        <input matInput formControlName="currencySymbol" placeholder="Enter currency symbol" />
+        <input matInput formControlName="currencySymbol" placeholder="Enter currency symbol" required minlength="3"
+            maxlength="5" />
+        <mat-error *ngIf="countryForm.controls['currencySymbol']?.hasError('required')">Currency Symbol is
+            required</mat-error>
+        <mat-error *ngIf="countryForm.controls['currencySymbol']?.hasError('minlength')">Currency Symbol must be Minimum
+            at
+            least 5
+            characters</mat-error>
     </mat-form-field>
 
     <div mat-dialog-actions class="action">

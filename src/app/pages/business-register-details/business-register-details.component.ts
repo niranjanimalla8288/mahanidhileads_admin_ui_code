@@ -31,6 +31,7 @@ export class BusinessRegisterDetailsComponent implements OnInit {
   constructor(
     public _service: BusinessRegisterService,
     public router: Router,
+    public _coreService: CoreService
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +57,12 @@ export class BusinessRegisterDetailsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  refreshList() {
+    this._coreService.openSnackBar('Leads Details Refreshed', 'done');
+    this.getBusinessList();
+  }
+
 
 }
 

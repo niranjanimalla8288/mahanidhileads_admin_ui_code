@@ -3,18 +3,27 @@
 
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" placeholder="Enter your name" />
+        <input matInput formControlName="name" placeholder="Enter your name" required />
+        <mat-error *ngIf="customerForm.get('name')?.hasError('required')">Name is required</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Mobile Number</mat-label>
-        <input matInput formControlName="mobileNumber" placeholder="Enter mobile number" />
+        <input matInput formControlName="mobileNumber" placeholder="Enter mobile number" required pattern minlength="10"
+            maxlength="10" />
+        <mat-error *ngIf="customerForm.get('mobileNumber')?.hasError('required')">Mobile number is required</mat-error>
+        <mat-error *ngIf="customerForm.get('mobileNumber')?.hasError('pattern')">Invalid mobile number</mat-error>
+        <mat-error *ngIf="customerForm.get('mobileNumber')?.hasError('minimumm')">Mobile Number Must be 10
+            Digits</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <!-- <mat-form-field appearance="fill">
         <mat-label>Login OTP</mat-label>
         <input matInput formControlName="loginOtp" placeholder="Enter login OTP" />
-    </mat-form-field>
+        <mat-error *ngIf="customerForm.get('loginOtp')?.hasError('required')">Login OTP is required</mat-error>
+        <mat-error *ngIf="customerForm.get('loginOtp')?.hasError('pattern')">Invalid login OTP</mat-error>
+    </mat-form-field> -->
+
 
     <div mat-dialog-actions class="action">
         <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>

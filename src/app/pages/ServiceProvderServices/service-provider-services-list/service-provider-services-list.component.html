@@ -5,13 +5,16 @@
                 <div class="col-md-6">
                     <div class="icon_header">
                         <i class="fa fa-address-book" aria-hidden="true"></i>
-                        <h1>Service Provider</h1>
+                        <h1>Service Provider Service</h1>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="create_btn">
                         <button mat-raised-button (click)="openAddEditEmpForm()">
-                            ADD Service Provider Service
+                            <i class="fa fa-plus" aria-hidden="true"></i> ADD Service Provider Service
+                        </button>
+                        <button mat-raised-button (click)="refreshList()">
+                            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh List
                         </button>
                     </div>
                 </div>
@@ -50,7 +53,8 @@
 
                     <ng-container matColumnDef="thumnailImagePath">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> S Image </th>
-                        <td mat-cell *matCellDef="let row"> <img src="{{row.thumnailImagePath}}" alt=""></td>
+                        <td mat-cell *matCellDef="let row"> <img class="baseImage" src="{{row.thumnailImagePath}}"
+                                alt=""></td>
                     </ng-container>
 
                     <ng-container matColumnDef="serviceProvider">

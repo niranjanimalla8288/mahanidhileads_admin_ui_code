@@ -74,10 +74,25 @@ export class CountryListComponent implements OnInit {
     }
   }
   deleteCountry(id: number) {
-    this._planService.deleteCountry(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Country deleted!', 'done');
-    });
+    const deleteMessage = confirm("Contry Confirm Delete");
+    if (deleteMessage) {
+      this._planService.deleteCountry(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Country deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error(err);
+
+          // Handle specific error cases here
+          if (err.status === 404) {
+            this._coreService.openSnackBar('Country not found!', 'error');
+          } else {
+            this._coreService.openSnackBar('Error deleting country.', 'error');
+          }
+        },
+      });
+    }
   }
 
   openEditForm(data: any) {
@@ -93,5 +108,10 @@ export class CountryListComponent implements OnInit {
         }
       },
     });
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Country Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

@@ -79,12 +79,28 @@ export class ServiceProviderCategoryServicesListComponent implements OnInit {
   // }
 
   deleteService(id: number) {
-    this._Service.deleteServiePCS(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
+    const confirmDelete = confirm('Are you sure you want to delete this employee?');
 
-    });
+    if (confirmDelete) {
+      this._Service.deleteServiePCS(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Employee deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error(err);
+
+          // Handle specific error cases here
+          if (err.status === 404) {
+            this._coreService.openSnackBar('Service not found!', 'error');
+          } else {
+            this._coreService.openSnackBar('Error deleting service.', 'error');
+          }
+        },
+      });
+    }
   }
+
   openEditForm(data: any) {
     console.log(data);
     const dialogRef = this._dialog.open(CreateServiceProvderCategoryServicesComponent, {
@@ -98,5 +114,9 @@ export class ServiceProviderCategoryServicesListComponent implements OnInit {
         }
       },
     });
+  }
+  refreshList() {
+    this._coreService.openSnackBar('Service Provider Category Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

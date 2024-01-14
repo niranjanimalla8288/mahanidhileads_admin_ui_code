@@ -101,12 +101,27 @@ export class ServiceProviderServicesListComponent implements OnInit {
   // }
 
   delete(id: number) {
-    this._Service.deleteServiceproviderservice(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
+    const deletemessage = confirm("Service Provider Service Confirm Delete");
+    if (deletemessage) {
+      this._Service.deleteServiceproviderservice(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Employee deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error(err);
 
-    });
+          // Handle specific error cases here
+          if (err.status === 404) {
+            this._coreService.openSnackBar('Service Provider Service not found!', 'error');
+          } else {
+            this._coreService.openSnackBar('Error deleting Service Provider Service.', 'error');
+          }
+        },
+      });
+    }
   }
+
   openEditForm(data: any) {
     console.log(data);
     const dialogRef = this._dialog.open(CreateServiceProvderServicesComponent, {
@@ -131,5 +146,10 @@ export class ServiceProviderServicesListComponent implements OnInit {
   getServiceProviderIdByName(serviceProviderId: number): string {
     const ServiceProvider = this.serviceProviderModel.find(s => s.id === serviceProviderId);
     return ServiceProvider ? ServiceProvider.businessName : ''
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Service Provider Service Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

@@ -29,7 +29,7 @@ export class Serviceprovidercategory_Service_Service {
 
 
   createServiceprovidercategory(data: ServiceprovidercategoryserviceModel) {
-    return this.http.post(this.apiurl + "Serviceprovidercategoryservice", data);
+    return this.http.post(this.apiurl + "Serviceprovidercategoryservice/", data);
   }
   // updateServiceprovidercategory(data: Serviceprovidercategory) {
   //   return this.http.put(`${this.apiurl}/${data.id}`, data);

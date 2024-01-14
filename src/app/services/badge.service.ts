@@ -25,9 +25,12 @@ export class BadgeService {
     return this.http.post(this.apiurl + "Badges", formData);
   }
 
-  updateBadge(id: number, data: any): Observable<any> {
-    // Assuming there is an 'id' property in the Badge object
-    return this.http.put(`${this.apiurl}${data.id}`, data);
+  // updateBadge(id: number, data: any): Observable<any> {
+  //   return this.http.put(`${this.apiurl}${data.id}`, data);
+  // }
+
+  updateBadge(id: number, data: Badge) {
+    return this.http.put(this.apiurl + "Badges/" + id, data);
   }
   // updatePlan(id: number, data: any): Observable<any> {
   //   return this.http.put(`http://localhost:5148/api/Plans/${id}`, data);

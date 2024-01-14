@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { Observable, Subscriber } from 'rxjs';
@@ -37,11 +37,11 @@ export class AddsCreateComponent implements OnInit {
     private CityService: CityService) {
     this.addForm = this._fb.group({
       id: '0',
-      cityid: '',
+      cityid: ['', [Validators.required]],
       addImage: '',
-      addPlace: '',
-      fromDate: '',
-      toDate: '',
+      addPlace: ['', [Validators.required]],
+      fromDate: ['', [Validators.required]],
+      toDate: ['', [Validators.required]],
       isActive: ''
     });
   }
@@ -59,35 +59,52 @@ export class AddsCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.addForm.valid, this.token) {
-      this.addForm.value.addImage = this.logoBas641;
-      if (this.data) {
-        this.addService
-          .updateAdds(this.data.id, this.addForm.value)
-          .subscribe({
-            next: (val: any) => {
-              console.log(val);
-              this._coreService.openSnackBar('Employee detail updated!');
-              this._dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-            },
-          });
-      } else {
-        this.addService.createAdd(this.addForm.value).subscribe({
+    this.addForm.value.addImage = this.logoBas641;
+    if (this.data) {
+      this.addService
+        .updateAdds(this.data.id, this.addForm.value)
+        .subscribe({
           next: (val: any) => {
             console.log(val);
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Employee detail updated!');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
             console.error(err);
+            // Handle specific error cases here
+            if (err.status === 404) {
+              // Handle not found error
+              this._coreService.openSnackBar('Employee not found!');
+            } else {
+              // Handle other errors
+              this._coreService.openSnackBar('Error updating employee detail.');
+            }
           },
         });
-      }
+    } else {
+      // If data is not present, it's a new record, so create a new add
+      this.addService.createAdd(this.addForm.value).subscribe({
+        next: (val: any) => {
+          console.log(val);
+          this._coreService.openSnackBar('Add added successfully');
+          this._dialogRef.close(true);
+        },
+        error: (err: any) => {
+          console.error(err);
+          // Handle specific error cases here
+          if (err.status === 400) {
+            // Handle bad request error
+            this._coreService.openSnackBar('Bad request. Please check your input.');
+          } else {
+            // Handle other errors
+            this._coreService.openSnackBar('Error ! Invalid Add Details,Please Check and Enter the Valid Detials');
+          }
+        },
+      });
     }
   }
+
+
 
   onCity(event: MatSelectChange): void {
     console.log("Select City ID: ", event.value);

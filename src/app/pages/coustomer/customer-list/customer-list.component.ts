@@ -29,7 +29,7 @@ export class CustomerListComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private _planService: CustomerService,
+    private _customerService: CustomerService,
     private _coreService: CoreService,
     public router: Router
   ) { }
@@ -51,7 +51,7 @@ export class CustomerListComponent implements OnInit {
   }
 
   getPlanList() {
-    this._planService.getCustomers().subscribe((res: any) => {
+    this._customerService.getCustomers().subscribe((res: any) => {
       console.log(res);
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.sort = this.sort;
@@ -68,11 +68,27 @@ export class CustomerListComponent implements OnInit {
     }
   }
   deleteCustomer(id: number) {
-    this._planService.deleteCustomer(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Customer deleted!', 'done');
-    });
+    const deletemessage = confirm("Confirm Delete Customer Details");
+    if (deletemessage) {
+      this._customerService.deleteCustomer(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Customer deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error(err);
+
+          // Handle specific error cases here
+          if (err.status === 404) {
+            this._coreService.openSnackBar('Customer not found!', 'error');
+          } else {
+            this._coreService.openSnackBar('Error deleting customer.', 'error');
+          }
+        },
+      });
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -87,5 +103,9 @@ export class CustomerListComponent implements OnInit {
         }
       },
     });
+  }
+  refreshList() {
+    this._coreService.openSnackBar('Customer Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

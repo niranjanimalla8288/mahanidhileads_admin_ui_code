@@ -10,6 +10,9 @@
                 [value]="spcsModel.id">{{spcsModel.name}}
             </mat-option>
         </mat-select>
+        <mat-error *ngIf="serviceForm.get('serviceProviderCategoryServicesId')?.hasError('required')">Service Provider
+            Category Service is
+            required</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -19,6 +22,8 @@
                 [value]="servicePriovder.id">{{servicePriovder.businessName}}
             </mat-option>
         </mat-select>
+        <mat-error *ngIf="serviceForm.get('serviceProviderId')?.hasError('required')">Service Provider Category is
+            required</mat-error>
     </mat-form-field>
     <mat-grid-list cols="2" rowHeight="2:1">
         <mat-grid-tile><input type="file" formControlName="thumnailImagePath"

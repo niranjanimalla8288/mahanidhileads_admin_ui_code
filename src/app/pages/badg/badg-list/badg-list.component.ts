@@ -73,13 +73,36 @@ export class BadgListComponent implements OnInit {
     }
   }
 
-  deleteEmployee(id: number) {
-    this._planService.deleteBadge(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Badge deleted!', 'done');
+  // deleteEmployee(id: number) {
+  //   this._planService.deleteBadge(id).subscribe((data: any) => {
+  //     this.getPlanList();
+  //     this._coreService.openSnackBar('Badge deleted!', 'done');
 
-    });
+  //   });
+  // }
+  deleteEmployee(id: number): void {
+    const confirmDelete = confirm('Are you sure you want to delete this badge?');
+
+    if (confirmDelete) {
+      this._planService.deleteBadge(id).subscribe(
+        (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Badge deleted!', 'done');
+        },
+        (error: any) => {
+          console.error(error);
+
+          // Handle specific error cases here
+          if (error.status === 404) {
+            alert('Badge not found!');
+          } else {
+            alert('Error deleting badge.');
+          }
+        }
+      );
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -97,5 +120,10 @@ export class BadgListComponent implements OnInit {
         }
       },
     });
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Badge Details Successfully Refreshed', 'done');
+    this.getPlanList();
   }
 }

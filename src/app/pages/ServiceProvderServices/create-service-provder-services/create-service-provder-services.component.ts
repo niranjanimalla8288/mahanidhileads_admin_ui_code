@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from 'src/app/core/core.service';
 import { ServiceproviderserviceService } from 'src/app/services/serviceproviderservice.service';
@@ -32,8 +32,8 @@ export class CreateServiceProvderServicesComponent implements OnInit {
 
     this.serviceForm = this._fb.group({
       id: '0',
-      serviceProviderCategoryServicesId: '',
-      serviceProviderId: '',
+      serviceProviderCategoryServicesId: ['', Validators.required],
+      serviceProviderId: ['', Validators.required],
       thumnailImagePath: ''
       // serviceProviderCategoryServices: ['']
     });
@@ -65,33 +65,51 @@ export class CreateServiceProvderServicesComponent implements OnInit {
   onSubmit() {
     if (this.serviceForm.valid) {
       this.serviceForm.value.thumnailImagePath = this.logoBas64;
+
       if (this.data) {
         this._Service
           .updateServiceproviderservice(this.data.id, this.serviceForm.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Plan detail updated!');
+              this._coreService.openSnackBar('Service Provider Service detail updated!');
               this._dialogRef.close(true);
               this.getPlanList();
             },
             error: (err: any) => {
               console.error(err);
+
+              // Handle specific error cases here
+              if (err.status === 404) {
+                this._coreService.openSnackBar('Service Provider Service not found!', 'error');
+              } else {
+                this._coreService.openSnackBar('Error updating Service Provider Service detail.', 'error');
+              }
             },
           });
       } else {
         this._Service.createServiceproviderservice(this.serviceForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Service  added successfully');
-            this._dialogRef.close(true);
             this.getPlanList();
+            this._coreService.openSnackBar('Service Provider Service added successfully');
+            this._dialogRef.close(true);
           },
           error: (err: any) => {
             console.error(err);
+
+            // Handle specific error cases here
+            if (err.status === 400) {
+              this._coreService.openSnackBar('Bad request. Please check your input.', 'error');
+            } else if (err.status === 409) {
+              this._coreService.openSnackBar('Conflict. This Service Provider Service already exists.', 'error');
+            } else {
+              this._coreService.openSnackBar('Error adding Service Provider Service.', 'error');
+            }
           },
         });
       }
     }
   }
+
 
   toModel(formData: any) {
 

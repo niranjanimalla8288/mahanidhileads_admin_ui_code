@@ -1,90 +1,132 @@
 <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
-    <h1>Organization</h1>
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-6">
+    <mat-tab-group #tabGroup>
+        <!-- General Information Tab -->
+        <mat-tab label="General Information">
+
+            <h1>Organization</h1>
+            <div class="col-md-12">
                 <div class="row">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Name</mat-label>
-                        <input matInput formControlName="name" placeholder="Enter your name" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Contact Person</mat-label>
-                        <input matInput formControlName="contactPerson" placeholder="Enter contact person" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Contact Number</mat-label>
-                        <input matInput formControlName="contactNumber" placeholder="Enter contact number" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Support Number</mat-label>
-                        <input matInput formControlName="supportNumber" placeholder="Enter support number" />
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Select a City</mat-label>
-                        <mat-select formControlName="cityId" (selectionChange)="onCity($event)" required>
-                            <mat-option *ngFor="let City of Cities" [value]="City.id">{{City.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Select a State</mat-label>
-                        <mat-select formControlName="stateId" (selectionChange)="onState($event)" required>
-                            <mat-option *ngFor="let State of States" [value]="State.id">{{State.name}}
-                            </mat-option>
-
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Support Email</mat-label>
-                        <input matInput formControlName="supportEmail" placeholder="Enter support email" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Address Line 1</mat-label>
-                        <input matInput formControlName="addressLine1" placeholder="Enter address line 1" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Select a Country</mat-label>
-                        <mat-select formControlName="countryId" (selectionChange)="onCountry($event)" required>
-                            <mat-option *ngFor="let Country of Countries" [value]="Country.id">{{Country.name}}
-                            </mat-option>
-
-                        </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Address Line 2</mat-label>
-                        <input matInput formControlName="addressLine2" placeholder="Enter address line 2" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Address Line 3</mat-label>
-                        <input matInput formControlName="addressLine3" placeholder="Enter address line 3" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Pin Code</mat-label>
-                        <input matInput formControlName="pinCode" placeholder="Enter pin code" />
-                    </mat-form-field>
-                    <!-- select tag -->
-
-                    <!-- select tag -->
-                    <div mat-dialog-actions class="action">
-                        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-                        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="name" placeholder="Enter your name" required />
+                            <mat-error *ngIf="organizationForm.get('name')?.hasError('required')">Organization name is
+                                required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Contact Person</mat-label>
+                            <input matInput formControlName="contactPerson" placeholder="Enter contact person"
+                                required />
+                            <mat-error *ngIf="organizationForm.get('contactPerson')?.hasError('required')">Contact
+                                Person is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Contact Number</mat-label>
+                            <input matInput formControlName="contactNumber" placeholder="Enter contact number" required
+                                maxlength="10" />
+                            <mat-error *ngIf="organizationForm.get('contactNumber')?.hasError('required')">Contact
+                                Mobile number is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Support Number</mat-label>
+                            <input matInput formControlName="supportNumber" placeholder="Enter support number" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a State</mat-label>
+                            <mat-select formControlName="stateId" (selectionChange)="OnSelectState($event)" required>
+                                <mat-option *ngFor="let State of States" [value]="State.id">{{State.name}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="organizationForm.get('stateId')?.hasError('required')">State Is
+                                required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a City</mat-label>
+                            <mat-select formControlName="cityId" required>
+                                <mat-option *ngFor="let City of Cities" [value]="City.id">{{City.name}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="organizationForm.get('cityid')?.hasError('required')">City is
+                                required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button type="button" (click)="goToNextTab(tabGroup)">Next</button>
+                <!-- ... -->
+            </div>
+        </mat-tab>
 
+        <!-- Address Tab -->
+        <mat-tab label="Address">
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Support Email</mat-label>
+                            <input matInput formControlName="supportEmail" placeholder="Enter support email" required />
+                            <mat-error *ngIf="organizationForm.get('supportEmail')?.hasError('required')">Email is
+                                required</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a Country</mat-label>
+                            <mat-select formControlName="countryId" (selectionChange)="onCountry($event)" required>
+                                <mat-option *ngFor="let Country of Countries"
+                                    [value]="Country.id">{{Country.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Address Line 1</mat-label>
+                            <input matInput formControlName="addressLine1" placeholder="Enter address line 1" />
+                            <mat-error *ngIf="organizationForm.get('addressLine1')?.hasError('required')">Address1 is
+                                required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Address Line 2</mat-label>
+                            <input matInput formControlName="addressLine2" placeholder="Enter address line 2" />
+                            <mat-error *ngIf="organizationForm.get('addressLine2')?.hasError('required')">Address2 is
+                                required</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Address Line 3</mat-label>
+                            <input matInput formControlName="addressLine3" placeholder="Enter address line 3" />
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Pin Code</mat-label>
+                            <input matInput formControlName="pinCode" placeholder="Enter pin code" />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div mat-dialog-actions class="action">
+                <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+                <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+            </div>
+
+        </mat-tab>
+
+    </mat-tab-group>
 </form>

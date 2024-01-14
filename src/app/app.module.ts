@@ -41,7 +41,7 @@ import { BusinessCreateComponent } from './pages/business/business-create/busine
 import { CityListComponent } from './pages/city/city-list/city-list.component';
 import { CityCreateComponent } from './pages/city/city-create/city-create.component';
 import { CityareaListComponent } from './pages/cityarea/cityarea-list/cityarea-list.component';
-import { CityareaComponent } from './pages/cityarea/city-create/cityarea.component';
+import { CityareaComponent } from './pages/cityarea/cityarea-create/cityarea.component';
 import { CityserviceprovidercategoryComponent } from './pages/cityserviceprovidercategory/city-service-provider-category-create/cityserviceprovidercategory.component';
 import { CityServiceProviderCategoryListComponent } from './pages/cityserviceprovidercategory/city-service-provider-category-list/city-service-provider-category-list.component';
 import { ServiceProviderListComponent } from './pages/ServiceProviders/service-provider-list/service-provider-list.component';

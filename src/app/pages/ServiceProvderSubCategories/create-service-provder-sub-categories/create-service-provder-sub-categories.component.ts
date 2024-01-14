@@ -7,6 +7,7 @@ import { PlanUpdateComponent } from '../../plan/plan-update/plan-update.componen
 import { ServiceprovidersubcategoryService } from 'src/app/services/serviceprovidersubcategory.service';
 import { Observable, Subscriber } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
+import { ServiceprovidercategoryserviceModel } from 'src/app/services/serviceprovidercategoryservice';
 
 @Component({
   selector: 'app-create-service-provder-sub-categories',
@@ -17,18 +18,18 @@ export class CreateServiceProvderSubCategoriesComponent implements OnInit {
 
   formGroup!: FormGroup;
   logoBas641: any;
-  serviceProviderCategoryModel: any;
+  serviceProviderCategoryModel: any[] = [];
   constructor(
     private _fb: FormBuilder,
     public _Service: ServiceprovidersubcategoryService,
+    private _serviceCategory: ServiceprovidercategoryserviceModel,
     private _dialogRef: MatDialogRef<PlanUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _coreService: CoreService) {
-
     this.formGroup = this._fb.group({
       id: '0',
       name: '',
-      parentCategoryId: '',
+      // parentCategoryId: '',
       mainCategoryId: '',
       thumnailImagePath: '',
     });
@@ -36,12 +37,10 @@ export class CreateServiceProvderSubCategoriesComponent implements OnInit {
   ngOnInit(): void {
     this.formGroup.patchValue(this.data);
     this.logoBas641 = this.data.thumnailImagePath;
-
     this._Service.getServiceprovidersubcategories().subscribe((data: any) => {
       this.serviceProviderCategoryModel = data;
-      console.log(data);
+      console.log(data, "service provider sub category details");
     });
-
     console.log("Hi i am working");
   }
   onSubmit() {
@@ -52,26 +51,45 @@ export class CreateServiceProvderSubCategoriesComponent implements OnInit {
           .updateServiceprovidersubcategory(this.data.id, this.formGroup.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Employee detail updated!');
+              this._coreService.openSnackBar('Service Provider Sub Category detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
               console.error(err);
+              if (err.status === 401) {
+                this._coreService.openSnackBar('Unauthorized. Please log in.');
+              } else if (err.status === 403) {
+                this._coreService.openSnackBar('Forbidden. You do not have permission.');
+              } else if (err.status === 404) {
+                this._coreService.openSnackBar('Not Found. Resource not available.');
+              } else {
+                this._coreService.openSnackBar('Error updating Service Provider Sub Category detail');
+              }
             },
           });
       } else {
         this._Service.createServiceprovidersubcategory(this.formGroup.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Service Provider Sub Category added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
             console.error(err);
+            if (err.status === 401) {
+              this._coreService.openSnackBar('Unauthorized. Please log in.');
+            } else if (err.status === 403) {
+              this._coreService.openSnackBar('Forbidden. You do not have permission.');
+            } else if (err.status === 404) {
+              this._coreService.openSnackBar('Not Found. Resource not available.');
+            } else {
+              this._coreService.openSnackBar('Error adding Service Provider Sub Category');
+            }
           },
         });
       }
     }
   }
+
   onchange = ($event: Event) => {
     const target = $event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];

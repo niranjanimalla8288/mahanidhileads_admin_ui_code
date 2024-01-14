@@ -1,20 +1,17 @@
 <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()" class="example-form">
-    <h1>{{data ? 'Update Service Provider Categories' : 'Create Service Provider Categories'}}</h1>
-
+    <h1>{{data ? 'Update State' : 'Create State'}}</h1>
     <mat-form-field appearance="fill">
         <mat-label>Select a Country</mat-label>
         <mat-select formControlName="countryId" (selectionChange)="onCountry($event)" required>
-            <mat-option *ngFor="let count of country" [value]="count.id">{{count.name}}
-            </mat-option>
+            <mat-option *ngFor="let count of country" [value]="count.id">{{count.name}}</mat-option>
         </mat-select>
+        <mat-error *ngIf="serviceForm.get('countryId')?.hasError('required')">Country is required</mat-error>
     </mat-form-field>
-
     <mat-form-field class="example-full-width">
-        <mat-label>Name</mat-label>
+        <mat-label>State Name</mat-label>
         <input matInput formControlName="name" required>
+        <mat-error *ngIf="serviceForm.get('name')?.hasError('required')">State Name is required</mat-error>
     </mat-form-field>
-
-
     <div mat-dialog-actions class="action">
         <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
         <button mat-raised-button color="primary" type="submit">{{data ? 'Update' : 'Save'}}</button>

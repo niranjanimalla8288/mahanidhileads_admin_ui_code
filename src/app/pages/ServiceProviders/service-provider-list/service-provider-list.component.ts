@@ -37,13 +37,12 @@ export class ServiceProviderListComponent implements OnInit {
   planModel: Badge = new Badge();
 
   id: number = 0;
-  logoBas641: any;
+  logoBase64!: string;
   serviceSubCategoryModel: any[] = [];
   serviceCategoryModel: any[] = [];
   constructor(
     private _dialog: MatDialog,
     private _planService: ServiceproviderService,
-
     private _coreService: CoreService,
     private serviceProviderSub: ServiceprovidersubcategoryService,
     private serviceProviderCategory: ServiceprovidercategoryService,
@@ -60,6 +59,7 @@ export class ServiceProviderListComponent implements OnInit {
       this.serviceCategoryModel = data;
     });
     // this.empForm.patchValue(this.data);
+
   }
 
   openAddEditEmpForm() {
@@ -91,20 +91,35 @@ export class ServiceProviderListComponent implements OnInit {
     }
   }
   deleteServiceProvider(id: number) {
-    this._planService.deleteServiceProvider(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Service Provider deleted!', 'done');
-    });
+    const deletemessage = confirm("Are you sure want to delete Service Provider Details !");
+    if (deletemessage) {
+      this._planService.deleteServiceProvider(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Service Provider deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error('Error deleting service provider:', err);
+
+          if (err.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+          } else if (err.status === 403) {
+            this._coreService.openSnackBar('Forbidden. You do not have permission to delete this service provider.');
+          } else if (err.status === 404) {
+            this._coreService.openSnackBar('Service Provider not found. Please check the details.');
+          } else {
+            this._coreService.openSnackBar('An error occurred while deleting the service provider. Please try again.');
+          }
+        },
+      });
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
-    this.logoBas641 = data.thumbnailImagePath;
-
     const dialogRef = this._dialog.open(UpdateServieProviderComponent, {
-
       data,
-
     });
 
     dialogRef.afterClosed().subscribe({
@@ -114,6 +129,8 @@ export class ServiceProviderListComponent implements OnInit {
         }
       },
     });
+
+
   }
 
 
@@ -125,5 +142,10 @@ export class ServiceProviderListComponent implements OnInit {
   getServiceCategoryName(mainCategoryId: number): string {
     const categoryName = this.serviceCategoryModel.find(s => s.id === mainCategoryId);
     return categoryName ? categoryName.name : '';
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Service Provider Details Successfully Refreshed', 'done');
+    this.getPlanList();
   }
 }

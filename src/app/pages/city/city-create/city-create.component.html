@@ -1,6 +1,5 @@
 <form [formGroup]="cityForm" (ngSubmit)="onSubmit()">
     <h1>City</h1>
-
     <mat-form-field appearance="fill">
         <mat-label>Select a State</mat-label>
         <mat-select formControlName="stateId" (selectionChange)="onCategoryChange($event)" required>
@@ -8,27 +7,15 @@
             <mat-option *ngFor="let state of States" [value]="state.id">
                 {{ state.name }}
             </mat-option>
+            <mat-error *ngIf="cityForm.get('stateId')?.hasError('required')">State is required</mat-error>
         </mat-select>
     </mat-form-field>
-
-
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" placeholder="Enter your name" />
+        <input matInput formControlName="name" placeholder="Enter your name" required maxlength="50" />
+        <mat-error *ngIf="cityForm.get('name')?.hasError('required')">Name is required</mat-error>
+        <mat-error *ngIf="cityForm.get('name')?.hasError('minlength')">Name must be minimumm lenght 3</mat-error>
     </mat-form-field>
-
-    <!-- <mat-form-field appearance="fill">
-        <mat-label>State Id</mat-label>
-        <input matInput formControlName="stateId" placeholder="Enter your name" />
-    </mat-form-field> -->
-
-    <!-- <mat-form-field appearance="fill">
-        <mat-label>State ID</mat-label>
-        <mat-select formControlName="stateId" placeholder="Select a state">
-            <mat-option *ngFor="let state of states" [value]="state.id">{{ state.name }}</mat-option>
-        </mat-select>
-    </mat-form-field> -->
-
     <mat-form-field appearance="fill">
         <mat-label>GPS Location</mat-label>
         <input matInput formControlName="gpslocation" />

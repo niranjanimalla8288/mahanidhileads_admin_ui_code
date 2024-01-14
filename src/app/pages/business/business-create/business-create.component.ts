@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from 'src/app/core/core.service';
 import { PlanService } from 'src/app/services/plan.service';
@@ -24,8 +24,8 @@ export class BusinessCreateComponent implements OnInit {
     private _coreService: CoreService) {
 
     this.businessForm = this._fb.group({
-      id:'0',
-      name: '',
+      id: '0',
+      name: ['', [Validators.required]],
 
     });
   }
@@ -43,7 +43,17 @@ export class BusinessCreateComponent implements OnInit {
               this._dialogRef.close(true);
             },
             error: (err: any) => {
-              console.error(err);
+              console.error('Error updating business:', err);
+
+              if (err.status === 401) {
+                this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+              } else if (err.status === 403) {
+                this._coreService.openSnackBar('Forbidden. You do not have permission to update this business.');
+              } else if (err.status === 404) {
+                this._coreService.openSnackBar('Business not found. Please check the details.');
+              } else {
+                this._coreService.openSnackBar('An error occurred while updating the business. Please try again.');
+              }
             },
           });
       } else {
@@ -53,19 +63,29 @@ export class BusinessCreateComponent implements OnInit {
             this._dialogRef.close(true);
           },
           error: (err: any) => {
-            console.error(err);
+            console.error('Error creating business:', err);
+
+            if (err.status === 401) {
+              this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+            } else if (err.status === 409) {
+              this._coreService.openSnackBar('Business already exists with the provided details.');
+            } else {
+              this._coreService.openSnackBar('An error occurred while adding the business. Please try again.');
+            }
           },
         });
       }
+    } else {
+      this._coreService.openSnackBar('Invalid form. Please fill in all required fields.');
     }
   }
 
   toModel(formData: any) {
-   
+
     this.Businessmodel.id = formData.id;
-    
+
     this.Businessmodel.name = formData.name;
-    
-   
+
+
   }
 }

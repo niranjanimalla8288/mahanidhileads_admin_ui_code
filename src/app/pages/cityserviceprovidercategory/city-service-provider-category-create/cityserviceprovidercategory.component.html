@@ -8,6 +8,9 @@
         {{ City.name }}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="cityServicesCategoryForm.get('cityId')?.hasError('required')">
+      City is required
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Select a serviceProviderCategorName</mat-label>
@@ -17,9 +20,13 @@
         {{ CPC.name }}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="cityServicesCategoryForm.get('serviceProviderCategoryId')?.hasError('required')">
+      Service Provider Category is required
+    </mat-error>
   </mat-form-field>
   <div mat-dialog-actions class="action">
     <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-    <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="cityServicesCategoryForm.invalid">{{data ?
+      'Update': 'Save'}}</button>
   </div>
 </form>

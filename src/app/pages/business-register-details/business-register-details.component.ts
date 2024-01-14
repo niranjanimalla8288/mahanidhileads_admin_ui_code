@@ -59,7 +59,7 @@ export class BusinessRegisterDetailsComponent implements OnInit {
   }
 
   refreshList() {
-    this._coreService.openSnackBar('Leads Details Refreshed', 'done');
+    this._coreService.openSnackBar('Business Details Refreshed', 'done');
     this.getBusinessList();
   }
 

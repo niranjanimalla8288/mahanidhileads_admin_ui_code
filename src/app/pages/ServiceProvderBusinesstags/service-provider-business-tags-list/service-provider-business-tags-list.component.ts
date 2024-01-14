@@ -86,11 +86,31 @@ export class ServiceProviderBusinessTagsListComponent implements OnInit {
     }
   }
   deleteBusynessTag(id: number) {
-    this._Service.deleteServiceproviderbusinesstag(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
-    });
+    const deletemessage = confirm("Confirm Delete Service Provider Business Tags");
+    if (deletemessage) {
+      this._Service.deleteServiceproviderbusinesstag(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Employee deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error('Error deleting business tag:', err);
+          // Add more specific error handling or display user-friendly error messages
+          if (err.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+          } else if (err.status === 403) {
+            this._coreService.openSnackBar('Forbidden. You do not have permission to perform this action.');
+          } else if (err.status === 404) {
+            this._coreService.openSnackBar('Employee not found. Please check the details.');
+          } else {
+            this._coreService.openSnackBar('An error occurred while deleting the employee. Please try again.');
+          }
+        },
+      });
+    }
+
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -117,5 +137,9 @@ export class ServiceProviderBusinessTagsListComponent implements OnInit {
   getBusinessTaName(businessTagId: number): string {
     const Service = this.businessTagModel.find(b => b.id === businessTagId);
     return Service ? Service.name : ''
+  }
+  refreshList() {
+    this._coreService.openSnackBar('Service Provider Business Tags Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

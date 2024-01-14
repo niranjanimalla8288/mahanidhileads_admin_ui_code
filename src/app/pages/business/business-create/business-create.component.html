@@ -1,8 +1,9 @@
 <form [formGroup]="businessForm" (ngSubmit)="onSubmit()">
     <h1>Business</h1>
     <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
+        <mat-label>Business</mat-label>
         <input matInput formControlName="name" placeholder="Enter your name" />
+        <mat-error *ngIf="businessForm.get('name')?.hasError('required')">Business Name is required</mat-error>
     </mat-form-field>
     <div mat-dialog-actions class="action">
         <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>

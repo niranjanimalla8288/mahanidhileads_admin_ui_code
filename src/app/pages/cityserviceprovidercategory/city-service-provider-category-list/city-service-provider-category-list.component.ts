@@ -49,14 +49,13 @@ export class CityServiceProviderCategoryListComponent implements OnInit {
     this.getPlanList();
     // this.empForm.patchValue(this.data);
     this.cityservice.getCities().subscribe((data: any) => {
-      console.log("Citydata" + data);
+      console.log("Citydata", data);
       this.Cities = data
     });
     this.serviceprovidecategory.getServiceprovidercategories().subscribe((res: any) => {
-      console.log('cityprovidercatergorydata:' + res);
+      console.log('cityprovidercatergorydata:', res);
       this.serviceprovidercatergories = res;
     });
-    console.log(this.getcityprovidercatergorie, "City Service Provider");
   }
 
   openAddEditEmpForm() {
@@ -88,11 +87,31 @@ export class CityServiceProviderCategoryListComponent implements OnInit {
     }
   }
   deleteEmployee(id: number) {
-    this._planService.deleteCityServiceProviderCategory(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('CityyServiceProviderCategory deleted!', 'done');
-    });
+    const confirmation = window.confirm('Are you sure you want to delete this CityServiceProviderCategory?');
+
+    if (confirmation) {
+      this._planService.deleteCityServiceProviderCategory(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('CityServiceProviderCategory deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error('Error deleting city service provider category:', err);
+
+          if (err.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+          } else if (err.status === 403) {
+            this._coreService.openSnackBar('Forbidden. You do not have permission to delete this city service provider category.');
+          } else if (err.status === 404) {
+            this._coreService.openSnackBar('City service provider category not found. Please check the details.');
+          } else {
+            this._coreService.openSnackBar('An error occurred while deleting the city service provider category. Please try again.');
+          }
+        },
+      });
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -115,5 +134,9 @@ export class CityServiceProviderCategoryListComponent implements OnInit {
   getcityprovidercatergorie(serviceProviderCategoryId: number): string {
     const ServiceProviderCategory = this.serviceprovidercatergories.find(c => c.id === serviceProviderCategoryId);
     return ServiceProviderCategory ? ServiceProviderCategory.name : '';
+  }
+  refreshList() {
+    this._coreService.openSnackBar('Ciry Service Provider Category Details Successfully Refreshed', 'done');
+    this.getPlanList();
   }
 }

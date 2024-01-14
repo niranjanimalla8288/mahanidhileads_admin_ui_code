@@ -90,10 +90,28 @@ export class ServiceProviderBadgesComponent implements OnInit {
     }
   }
   deleteBadge(id: number) {
-    this._Service.deleteServiceproviderbadge(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
-    });
+    const DeleteMessage = confirm("confirm Delete Service Provider Badges !");
+    if (DeleteMessage) {
+      this._Service.deleteServiceproviderbadge(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Service Provider Badges deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error('Error deleting service provider badge:', err);
+          // Add more specific error handling or display user-friendly error messages
+          if (err.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+          } else if (err.status === 403) {
+            this._coreService.openSnackBar('Forbidden. You do not have permission to perform this action.');
+          } else if (err.status === 404) {
+            this._coreService.openSnackBar('Service provider badge not found. Please check the details.');
+          } else {
+            this._coreService.openSnackBar('An error occurred while deleting the service provider badge. Please try again.');
+          }
+        },
+      });
+    }
   }
 
   openEditForm(data: any) {
@@ -119,5 +137,10 @@ export class ServiceProviderBadgesComponent implements OnInit {
   getBadgeName(badgeId: number): string {
     const Badge = this.badgeModel.find(b => b.id === badgeId);
     return Badge ? Badge.name : '';
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Service Provider Badges Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

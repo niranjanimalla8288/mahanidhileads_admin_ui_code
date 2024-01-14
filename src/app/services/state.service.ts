@@ -20,7 +20,7 @@ export class StateService {
     return this.http.get(`${this.apiurl + "States"}/getStateById?Id=${id}`);
   }
 
-  createState(data: State) {
+  createState(data: State): Observable<any> {
     return this.http.post(this.apiurl + "States", data);
   }
 

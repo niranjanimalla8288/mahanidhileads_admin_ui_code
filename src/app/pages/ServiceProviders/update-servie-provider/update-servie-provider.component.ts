@@ -130,7 +130,7 @@ export class UpdateServieProviderComponent implements OnInit {
           .updateServiceProvider(this.data.id, this.serviceproviderForm.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Employee detail updated!');
+              this._coreService.openSnackBar('Servive Provider detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
@@ -140,7 +140,7 @@ export class UpdateServieProviderComponent implements OnInit {
       } else {
         this._planService.createServiceProvider(this.serviceproviderForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Servive Provider added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {

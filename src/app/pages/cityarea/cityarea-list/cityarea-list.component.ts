@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CoreService } from 'src/app/core/core.service';
 import { CityareaService } from 'src/app/services/cityarea.service';
-import { CityareaComponent } from '../city-create/cityarea.component';
+import { CityareaComponent } from '../cityarea-create/cityarea.component';
 import { CityService } from 'src/app/services/city.service';
 import { Badge } from 'src/app/model/badge';
 import { StateService } from 'src/app/services/state.service';
@@ -43,7 +43,7 @@ export class CityareaListComponent implements OnInit {
   // id: number = 0;
   States: any[] = [];
   City: any[] = [];
-  cityArea: any;
+  cityArea: any[] = [];
   constructor(
     private _dialog: MatDialog,
     private _cityService: CityService,
@@ -57,18 +57,19 @@ export class CityareaListComponent implements OnInit {
     this.getCityAreaList();
     // this.empForm.patchValue(this.data);
     this.stateservice.getStates().subscribe((data: any) => {
-      console.log("statedata" + data);
+      console.log("statedata", data);
       this.States = data
     });
 
     this._cityAreasService.getCityareas().subscribe((data: any) => {
+      console.log(data, "city area data");
       this.cityArea = data;
-      console.log(data, "city areaa data");
+
     });
   }
 
   openAddEditEmpForm() {
-    const dialogRef = this._dialog.open(CityCreateComponent);
+    const dialogRef = this._dialog.open(CityareaComponent);
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -96,16 +97,36 @@ export class CityareaListComponent implements OnInit {
     }
   }
   deleteEmployee(id: number) {
-    this._cityService.deleteCity(id).subscribe((data: any) => {
-      this.getCityAreaList();
-      this._coreService.openSnackBar('City deleted!', 'done');
-    });
+    const confirmation = window.confirm('Are you sure you want to delete this city Area?');
+
+    if (confirmation) {
+      this._cityService.deleteCity(id).subscribe({
+        next: (data: any) => {
+          this.getCityAreaList();
+          this._coreService.openSnackBar('City Area deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error('Error deleting city:', err);
+
+          if (err.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+          } else if (err.status === 403) {
+            this._coreService.openSnackBar('Forbidden. You do not have permission to delete this City Area.');
+          } else if (err.status === 404) {
+            this._coreService.openSnackBar('City Area not found. Please check the details.');
+          } else {
+            this._coreService.openSnackBar('An error occurred while deleting the City Area. Please try again.');
+          }
+        },
+      });
+    }
   }
+
 
 
   openEditForm(data: any) {
     console.log(data);
-    const dialogRef = this._dialog.open(CityCreateComponent, {
+    const dialogRef = this._dialog.open(CityareaComponent, {
       data
     });
 
@@ -124,5 +145,8 @@ export class CityareaListComponent implements OnInit {
     const State = this.States.find(c => c.id === cityId);
     return State ? State.name : '';
   }
-
+  refreshList() {
+    this._coreService.openSnackBar('City Area Details Successfully Refreshed', 'done');
+    this.getCityAreaList();
+  }
 }

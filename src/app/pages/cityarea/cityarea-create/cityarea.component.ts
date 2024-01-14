@@ -17,8 +17,8 @@ import { MatSelectChange } from '@angular/material/select';
 export class CityareaComponent implements OnInit {
 
   cityAreaForm!: FormGroup;
-  CityareaModel:Cityarea =new Cityarea();
-   Cities:any[]=[];
+  CityareaModel: Cityarea = new Cityarea();
+  Cities: any[] = [];
   constructor(
     private _fb: FormBuilder,
     public _planService: CityareaService,
@@ -28,12 +28,12 @@ export class CityareaComponent implements OnInit {
     private _coreService: CoreService) {
 
     this.cityAreaForm = this._fb.group({
-      id:'0',
+      id: '0',
       name: '',
-      cityId:'',
-      pinCode:'',
-      gpslocation:'',
-      searchRadiusInKms:''
+      cityId: '',
+      pinCode: '',
+      gpslocation: '',
+      searchRadiusInKms: ''
 
     });
   }
@@ -43,9 +43,9 @@ export class CityareaComponent implements OnInit {
   }
   ngOnInit(): void {
     this.cityAreaForm.patchValue(this.data);
-    this.cityservice.getCities().subscribe((data:any)=>{
-      console.log("Citydata"+data);
-      this.Cities=data
+    this.cityservice.getCities().subscribe((data: any) => {
+      console.log("Citydata" + data);
+      this.Cities = data
     })
   }
   onSubmit() {
@@ -59,7 +59,16 @@ export class CityareaComponent implements OnInit {
               this._dialogRef.close(true);
             },
             error: (err: any) => {
-              console.error(err);
+              console.error('Error updating city area:', err);
+              if (err.status === 401) {
+                this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+              } else if (err.status === 403) {
+                this._coreService.openSnackBar('Forbidden. You do not have permission to update this city area.');
+              } else if (err.status === 404) {
+                this._coreService.openSnackBar('City area not found. Please check the details.');
+              } else {
+                this._coreService.openSnackBar('An error occurred while updating the city area. Please try again.');
+              }
             },
           });
       } else {
@@ -69,19 +78,29 @@ export class CityareaComponent implements OnInit {
             this._dialogRef.close(true);
           },
           error: (err: any) => {
-            console.error(err);
+            console.error('Error creating city area:', err);
+            if (err.status === 401) {
+              this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+            } else if (err.status === 409) {
+              this._coreService.openSnackBar('City area already exists with the provided details.');
+            } else {
+              this._coreService.openSnackBar('An error occurred while adding the city area. Please try again.');
+            }
           },
         });
       }
+    } else {
+      this._coreService.openSnackBar('Invalid form. Please fill in all required fields.');
     }
   }
+
   toModel(formData: any) {
-    
+
     this.CityareaModel.name = formData.name;
     this.CityareaModel.cityId = formData.cityId;
-   this.CityareaModel.pinCode=formData.pinCode;
-   this.CityareaModel.gpslocation=formData.gpslocation;
-   this.CityareaModel.searchRadiusInKms=formData.searchRadiusInKms;
+    this.CityareaModel.pinCode = formData.pinCode;
+    this.CityareaModel.gpslocation = formData.gpslocation;
+    this.CityareaModel.searchRadiusInKms = formData.searchRadiusInKms;
   }
 }
 

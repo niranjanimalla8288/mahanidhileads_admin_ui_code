@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from 'src/app/core/core.service';
 import { PlanUpdateComponent } from '../../plan/plan-update/plan-update.component';
@@ -31,8 +31,8 @@ export class CreateServiceProvderBusinesstagsComponent implements OnInit {
 
     this.formGroup = this._fb.group({
       'id': '0',
-      'serviceProviderId': '',
-      'businessTagId': ''
+      serviceProviderId: [null, Validators.required],
+      businessTagId: [null, Validators.required],
 
     });
   }
@@ -59,7 +59,17 @@ export class CreateServiceProvderBusinesstagsComponent implements OnInit {
               this._dialogRef.close(true);
             },
             error: (err: any) => {
-              console.error(err);
+              console.error('Error updating service provider business tag:', err);
+              // Add more specific error handling or display user-friendly error messages
+              if (err.status === 401) {
+                this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+              } else if (err.status === 403) {
+                this._coreService.openSnackBar('Forbidden. You do not have permission to perform this action.');
+              } else if (err.status === 404) {
+                this._coreService.openSnackBar('Service provider business tag not found. Please check the details.');
+              } else {
+                this._coreService.openSnackBar('An error occurred while updating the service provider business tag. Please try again.');
+              }
             },
           });
       } else {
@@ -69,10 +79,20 @@ export class CreateServiceProvderBusinesstagsComponent implements OnInit {
             this._dialogRef.close(true);
           },
           error: (err: any) => {
-            console.error(err);
+            console.error('Error creating service provider business tag:', err);
+            // Add more specific error handling or display user-friendly error messages
+            if (err.status === 401) {
+              this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+            } else if (err.status === 409) {
+              this._coreService.openSnackBar('Service provider business tag already exists with the provided details.');
+            } else {
+              this._coreService.openSnackBar('An error occurred while adding the service provider business tag. Please try again.');
+            }
           },
         });
       }
+    } else {
+      this._coreService.openSnackBar('Invalid form. Please fill in all required fields.');
     }
   }
 

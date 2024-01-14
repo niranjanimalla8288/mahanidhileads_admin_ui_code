@@ -79,11 +79,31 @@ export class CityListComponent implements OnInit {
     }
   }
   deleteEmployee(id: number) {
-    this._cityService.deleteCity(id).subscribe((data: any) => {
-      this.getCityList();
-      this._coreService.openSnackBar('City deleted!', 'done');
-    });
+    const confirmation = window.confirm('Are you sure you want to delete this city?');
+
+    if (confirmation) {
+      this._cityService.deleteCity(id).subscribe({
+        next: (data: any) => {
+          this.getCityList();
+          this._coreService.openSnackBar('City deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error('Error deleting city:', err);
+
+          if (err.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+          } else if (err.status === 403) {
+            this._coreService.openSnackBar('Forbidden. You do not have permission to delete this city.');
+          } else if (err.status === 404) {
+            this._coreService.openSnackBar('City not found. Please check the details.');
+          } else {
+            this._coreService.openSnackBar('An error occurred while deleting the city. Please try again.');
+          }
+        },
+      });
+    }
   }
+
 
 
   openEditForm(data: any) {
@@ -107,5 +127,8 @@ export class CityListComponent implements OnInit {
     const State = this.States.find(c => c.id === stateId);
     return State ? State.name : '';
   }
-
+  refreshList() {
+    this._coreService.openSnackBar('City Details Successfully Refreshed', 'done');
+    this.getCityList();
+  }
 }

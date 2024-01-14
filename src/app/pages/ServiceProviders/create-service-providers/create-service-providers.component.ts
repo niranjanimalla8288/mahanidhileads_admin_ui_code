@@ -85,7 +85,7 @@ export class CreateServiceProvidersComponent implements OnInit {
 
   ngOnInit(): void {
     this.serviceproviderForm.patchValue(this.data);
-    // this.logoBas641 = this.data.thumnailImagePath;
+    this.logoBas641 = this.data.thumnailImagePath;
     this._mainCategoryService.getServiceprovidercategories().subscribe((data: any) => {
       this.mainCategoryModel = data;
     });
@@ -103,15 +103,26 @@ export class CreateServiceProvidersComponent implements OnInit {
   }
 
   onSubmit() {
-    this._cityService.getCities().subscribe((data: any) => {
-      this.cityModel = data;
-    });
     this.serviceproviderForm.value.thumnailImagePath = this.logoBas641;
-    this._Service.createServiceProvider(this.serviceproviderForm.value).subscribe((data: any) => {
-      this._coreService.openSnackBar('Service Provider added successfully');
-      this._dialogRef.close(true);
+    this._Service.createServiceProvider(this.serviceproviderForm.value).subscribe({
+      next: (data: any) => {
+        this._coreService.openSnackBar('Service Provider added successfully');
+        this._dialogRef.close(true);
+      },
+      error: (err: any) => {
+        console.error('Error creating service provider:', err);
+
+        if (err.status === 401) {
+          this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+        } else if (err.status === 403) {
+          this._coreService.openSnackBar('Forbidden. You do not have permission to create this service provider.');
+        } else {
+          this._coreService.openSnackBar('An error occurred while creating the service provider. Please try again.');
+        }
+      },
     });
   }
+
 
   onchange = ($event: Event) => {
     const target = $event.target as HTMLInputElement;

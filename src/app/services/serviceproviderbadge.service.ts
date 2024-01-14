@@ -24,7 +24,6 @@ export class ServiceproviderbadgeService {
   createServiceproviderbadge(data: Serviceproviderbadge) {
     return this.http.post(this.apiurl + "Serviceproviderbadges", data);
   }
-
   // updateServiceproviderbadge(id: number, data: any) {
   //   // Assuming there is an 'id' property in the Serviceproviderbadge object
   //   return this.http.put(`${this.apiurl}/${id}`, data);

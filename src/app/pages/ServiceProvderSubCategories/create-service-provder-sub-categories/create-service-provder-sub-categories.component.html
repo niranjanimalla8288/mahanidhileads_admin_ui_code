@@ -1,45 +1,30 @@
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="example-form">
     <h1 class="text-center">
-        {{data ? 'Update Service Provider Sub Categories': 'Create Service Provider Sub Categories'}}
+        {{data ? 'Update Service Provider Sub Categories' : 'Create Service Provider Sub Categories'}}
     </h1>
-
     <mat-form-field class="example-full-width">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" required>
+        <mat-error *ngIf="formGroup.get('name')?.hasError('required')">Name is required</mat-error>
     </mat-form-field>
-
     <mat-form-field class="example-full-width">
         <mat-label>Parent Category ID</mat-label>
         <input matInput type="number" formControlName="parentCategoryId">
+        <mat-error *ngIf="formGroup.get('parentCategoryId')?.hasError('required')">Parent Category is
+            required</mat-error>
     </mat-form-field>
-    <!-- <mat-form-field appearance="fill">
-        <mat-label>Parent Category ID</mat-label>
-        <mat-select formControlName="parentCategoryId" (selectionChange)="onServiceSubCategory($event)" required>
-            <mat-option *ngFor="let parentCategory of serviceProviderCategoryModel"
-                [value]="parentCategory.id">{{parentCategory.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field> -->
     <mat-form-field class="example-full-width">
         <mat-label>Main Category ID</mat-label>
         <input matInput type="number" formControlName="mainCategoryId" required>
+        <mat-error *ngIf="formGroup.get('mainCategoryId')?.hasError('required')">Main Category ID is
+            required</mat-error>
     </mat-form-field>
-    <!-- <mat-form-field class="example-full-width">
-            <mat-label>Main Category ID</mat-label>
-            <input matInput type="number" formControlName="mainCategoryId" required>
-        </mat-form-field> -->
-    <!-- <mat-form-field appearance="fill">
-        <mat-label>Select Main Category</mat-label>
-        <mat-select formControlName="mainCategoryId" (selectionChange)="onServiceMainCategory($event)" required>
-            <mat-option *ngFor="let category of serviceProviderCategoryModel" [value]="category.id">{{category.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field> -->
     <input type="file" formControlName="thumnailImagePath" (change)="onchange($event)">
     <img class="baseImage" [src]="logoBas641" width="100" height="80" alt="">
-
     <div mat-dialog-actions class="action">
         <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
+            {{data ? 'Update' : 'Save'}}
+        </button>
     </div>
 </form>

@@ -70,12 +70,32 @@ export class BusinessListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
   deleteBusiness(id: number) {
-    this._planService.deleteBusinesstag(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Business deleted!', 'done');
-    });
+    const deletemessage = confirm("Confirm Delete Buniess Details!");
+    if (deletemessage) {
+      this._planService.deleteBusinesstag(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Business deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error('Error deleting business:', err);
+
+          if (err.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+          } else if (err.status === 403) {
+            this._coreService.openSnackBar('Forbidden. You do not have permission to delete this business.');
+          } else if (err.status === 404) {
+            this._coreService.openSnackBar('Business not found. Please check the details.');
+          } else {
+            this._coreService.openSnackBar('An error occurred while deleting the business. Please try again.');
+          }
+        },
+      });
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -90,5 +110,9 @@ export class BusinessListComponent implements OnInit {
         }
       },
     });
+  }
+  refreshList() {
+    this._coreService.openSnackBar('Business Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

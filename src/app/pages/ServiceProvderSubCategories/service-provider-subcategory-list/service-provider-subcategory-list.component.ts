@@ -84,11 +84,30 @@ export class ServiceProviderSubcategoryListComponent implements OnInit {
     }
   }
   deleteServiceprovidersubcategory(id: number) {
-    this._planService.deleteServiceprovidersubcategory(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
-    });
+    const deletemessage = confirm("Are you sure want to delete Service Provider Sub Category Details");
+    if (deletemessage) {
+      this._planService.deleteServiceprovidersubcategory(id).subscribe({
+        next: (data: any) => {
+          this.getPlanList();
+          this._coreService.openSnackBar('Service Provider Subcategory deleted!', 'done');
+        },
+        error: (err: any) => {
+          console.error('Error deleting service provider subcategory:', err);
+
+          if (err.status === 401) {
+            this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+          } else if (err.status === 403) {
+            this._coreService.openSnackBar('Forbidden. You do not have permission to delete this service provider subcategory.');
+          } else if (err.status === 404) {
+            this._coreService.openSnackBar('Service Provider Subcategory not found. Please check the details.');
+          } else {
+            this._coreService.openSnackBar('An error occurred while deleting the service provider subcategory. Please try again.');
+          }
+        },
+      });
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -132,5 +151,10 @@ export class ServiceProviderSubcategoryListComponent implements OnInit {
     };
 
     reader.readAsDataURL(file);
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Service Provider Sub Category Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

@@ -27,8 +27,8 @@ export class CreateStatesComponent implements OnInit {
     private _coreService: CoreService) {
     this.serviceForm = this._fb.group({
       id: '0',
-      name: '',
-      countryId: '',
+      countryId: ['', Validators.required],
+      name: ['', [Validators.required]],
     });
   }
   ngOnInit(): void {
@@ -50,6 +50,7 @@ export class CreateStatesComponent implements OnInit {
   }
   onSubmit() {
     this.toModel(this.serviceForm.value);
+
     if (this.serviceForm.valid) {
       if (this.data) {
         this._Service
@@ -61,24 +62,44 @@ export class CreateStatesComponent implements OnInit {
               this._dialogRef.close(true);
             },
             error: (err: any) => {
-              console.error(err);
+              console.error('Error updating state:', err);
+              // Add more specific error handling or display user-friendly error messages
+              if (err.status === 401) {
+                this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+              } else if (err.status === 403) {
+                this._coreService.openSnackBar('Forbidden. You do not have permission to perform this action.');
+              } else if (err.status === 404) {
+                this._coreService.openSnackBar('State not found. Please check the details.');
+              } else {
+                this._coreService.openSnackBar('An error occurred while updating the state. Please try again.');
+              }
             },
           });
       } else {
         this._Service.createState(this.serviceForm.value).subscribe({
           next: (val: any) => {
-
             this._coreService.openSnackBar('State added successfully');
             this._dialogRef.close(true);
             this.getPlanList();
           },
           error: (err: any) => {
-            console.error(err);
+            console.error('Error creating state:', err);
+            // Add more specific error handling or display user-friendly error messages
+            if (err.status === 401) {
+              this._coreService.openSnackBar('Unauthorized. Please login and try again.');
+            } else if (err.status === 409) {
+              this._coreService.openSnackBar('State already exists with the provided details.');
+            } else {
+              this._coreService.openSnackBar('An error occurred while adding the state. Please try again.');
+            }
           },
         });
       }
+    } else {
+      this._coreService.openSnackBar('Invalid form. Please fill in all required fields.');
     }
   }
+
   // onSubmit() {
   //   this._planService.updatePlan(this.data.id, this.serviceForm.value).subscribe((data: any) => {
   //     this._coreService.openSnackBar('Successfully Updated Plan Data');

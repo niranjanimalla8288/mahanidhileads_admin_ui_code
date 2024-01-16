@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <mat-form-field appearance="fill">
-                            <mat-label>Name</mat-label>
+                            <mat-label>Organization Name</mat-label>
                             <input matInput formControlName="name" placeholder="Enter your name" required />
                             <mat-error *ngIf="organizationForm.get('name')?.hasError('required')">Organization name is
                                 required</mat-error>
@@ -32,10 +32,19 @@
                                 Mobile number is required</mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <mat-form-field appearance="fill">
                             <mat-label>Support Number</mat-label>
                             <input matInput formControlName="supportNumber" placeholder="Enter support number" />
+                        </mat-form-field>
+                    </div> -->
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a Country</mat-label>
+                            <mat-select formControlName="countryId" (selectionChange)="onCountry($event)" required>
+                                <mat-option *ngFor="let Country of Countries"
+                                    [value]="Country.id">{{Country.name}}</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
@@ -80,18 +89,10 @@
                         </mat-form-field>
                     </div>
 
+
                     <div class="col-md-6">
                         <mat-form-field appearance="fill">
-                            <mat-label>Select a Country</mat-label>
-                            <mat-select formControlName="countryId" (selectionChange)="onCountry($event)" required>
-                                <mat-option *ngFor="let Country of Countries"
-                                    [value]="Country.id">{{Country.name}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Address Line 1</mat-label>
+                            <mat-label>Door Number</mat-label>
                             <input matInput formControlName="addressLine1" placeholder="Enter address line 1" />
                             <mat-error *ngIf="organizationForm.get('addressLine1')?.hasError('required')">Address1 is
                                 required</mat-error>

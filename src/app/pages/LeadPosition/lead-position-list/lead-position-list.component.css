@@ -17,6 +17,14 @@
     margin-top: 10px;
 }
 
+.create_btn i {
+    color: black;
+}
+
+.create_btn button {
+    margin-left: 10px;
+}
+
 .action {
     display: flex;
     gap: 5px;

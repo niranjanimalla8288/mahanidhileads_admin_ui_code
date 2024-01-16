@@ -17,7 +17,7 @@ import { ServiceprovidercategoryService } from 'src/app/services/serviceprovider
   styleUrls: ['./create-lead-position.component.css']
 })
 export class CreateLeadPositionComponent {
-  cityForm!: FormGroup;
+  leadPositionForm!: FormGroup;
   LpModel: Leadposition = new Leadposition();
   Cities: any[] = [];
   Categories: any[] = [];
@@ -32,7 +32,7 @@ export class CreateLeadPositionComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _coreService: CoreService) {
 
-    this.cityForm = this._fb.group({
+    this.leadPositionForm = this._fb.group({
       id: '0',
       cityId: '',
       categoryId: '',
@@ -48,7 +48,7 @@ export class CreateLeadPositionComponent {
     console.log('Selected Category ID:', event.value);
   }
   ngOnInit(): void {
-    this.cityForm.patchValue(this.data);
+    this.leadPositionForm.patchValue(this.data);
     this.cityService.getCities().subscribe((data: any) => {
       console.log("Citiesdata" + data);
       this.Cities = data
@@ -67,13 +67,13 @@ export class CreateLeadPositionComponent {
     });
   }
   onSubmit() {
-    if (this.cityForm.valid) {
+    if (this.leadPositionForm.valid) {
       if (this.data) {
         this._planService
-          .updateLP(this.data.id, this.cityForm.value)
+          .updateLP(this.data.id, this.leadPositionForm.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('City detail updated!');
+              this._coreService.openSnackBar('Lead Position detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
@@ -81,9 +81,9 @@ export class CreateLeadPositionComponent {
             },
           });
       } else {
-        this._planService.createLP(this.cityForm.value).subscribe({
+        this._planService.createLP(this.leadPositionForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('City added successfully');
+            this._coreService.openSnackBar('Lead Position added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {

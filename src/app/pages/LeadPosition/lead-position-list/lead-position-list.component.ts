@@ -134,4 +134,8 @@ export class LeadPositionListComponent {
     const State = this.Categories.find(c => c.id === categoryId);
     return State ? State.name : '';
   }
+  refreshList() {
+    this._coreService.openSnackBar('Lead Position Details Refreshed', 'done');
+    this.getPlanList();
+  }
 }

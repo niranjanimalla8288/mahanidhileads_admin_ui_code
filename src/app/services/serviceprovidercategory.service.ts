@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Serviceprovidercategory } from '../model/serviceprovidercategory';
 import { Observable } from 'rxjs';
 import { environment } from '../model/environment';
+import { Add } from '../model/adds';
 
 @Injectable({
   providedIn: 'root'
@@ -37,4 +38,6 @@ export class ServiceprovidercategoryService {
   deleteServiceprovidercategory(id: number): Observable<any> {
     return this.http.delete(`${this.apiurl + "Serviceprovidercategories"}/${id}`);
   }
+
+
 }

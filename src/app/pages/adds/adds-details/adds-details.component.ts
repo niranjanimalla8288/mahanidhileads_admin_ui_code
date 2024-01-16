@@ -10,6 +10,7 @@ import { AddsService } from 'src/app/services/adds.service';
 import { AddsCreateComponent } from '../adds-create/adds-create.component';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { ServiceprovidercategoryService } from 'src/app/services/serviceprovidercategory.service';
 
 @Component({
   selector: 'app-adds-details',
@@ -20,7 +21,8 @@ export class AddsDetailsComponent implements OnInit {
 
   displayedColumns: string[] = [
     // 'id',
-    'cityid',
+    'cityId',
+    'categoryId',
     'addImage',
     'addPlace',
     'fromDate',
@@ -44,6 +46,7 @@ export class AddsDetailsComponent implements OnInit {
     private addService: AddsService,
     private _coreService: CoreService,
     private cityService: CityService,
+    private _serviceProviderCategory: ServiceprovidercategoryService,
     public router: Router,
     public authservice: LoginService
 
@@ -55,6 +58,11 @@ export class AddsDetailsComponent implements OnInit {
 
     this.cityService.getCities().subscribe((data: any) => {
       this.Cities = data;
+    });
+
+    this._serviceProviderCategory.getServiceprovidercategories().subscribe((data: any) => {
+      console.log(data, "Service Provider Category list")
+      this.serviceCategoryModel = data;
     });
 
   }
@@ -96,7 +104,7 @@ export class AddsDetailsComponent implements OnInit {
   //   });
   // }
   deleteEmployee(id: number) {
-    const confirmDelete = confirm('Are you sure you want to delete this employee?');
+    const confirmDelete = confirm('Are you sure you want to delete this Adds Details?');
 
     if (confirmDelete) {
       this.addService.deleteAdds(id).subscribe(
@@ -120,7 +128,7 @@ export class AddsDetailsComponent implements OnInit {
     }
   }
   refreshList() {
-    this._coreService.openSnackBar('Employee Details Refreshed', 'done');
+    this._coreService.openSnackBar('Adds Details Refreshed', 'done');
     this.getPlanList();
   }
 
@@ -141,4 +149,9 @@ export class AddsDetailsComponent implements OnInit {
     const City = this.Cities.find(c => c.id === cityId);
     return City ? City.name : '';
   }
+  getCategoryName(categoryId: number): string {
+    const Category = this.serviceCategoryModel.find(c => c.id === categoryId);
+    return Category ? Category.name : ''
+  }
+
 }

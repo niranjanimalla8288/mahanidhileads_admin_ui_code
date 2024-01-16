@@ -36,30 +36,30 @@ export class OrganizationComponent implements OnInit {
 
     this.organizationForm = this._fb.group({
       id: '0',
-      // name: ['',],
-      // contactPerson: [''],
-      // contactNumber: [''],
-      // supportNumber: [''],
-      // supportEmail: [''],
-      // addressLine1: [''],
-      // addressLine2: [''],
-      // addressLine3: [''],
-      // stateId: [''],
-      // cityId: [''],
-      // pinCode: [''],
-      // countryId: [''],
-      name: ['', [Validators.required]],
-      contactPerson: ['', [Validators.required]],
-      contactNumber: ['', [Validators.required, Validators.pattern(/^\+?[0-9]*$/)]],
-      supportNumber: ['', [Validators.required, Validators.pattern(/^\+?[0-9]*$/)]],
-      cityId: [Number],
-      stateId: [Number],
-      supportEmail: ['', [Validators.required, Validators.email]],
-      addressLine1: ['', [Validators.required]],
-      countryId: [null, [Validators.required]],
+      name: ['',],
+      contactPerson: [''],
+      contactNumber: [''],
+      supportNumber: [''],
+      supportEmail: [''],
+      addressLine1: [''],
       addressLine2: [''],
       addressLine3: [''],
-      pinCode: ['', [Validators.required]],
+      stateId: [''],
+      cityId: [''],
+      pinCode: [''],
+      countryId: [''],
+      // name: ['', [Validators.required]],
+      // contactPerson: ['', [Validators.required]],
+      // contactNumber: ['', [Validators.required, Validators.pattern(/^\+?[0-9]*$/)]],
+      // supportNumber: ['', [Validators.required, Validators.pattern(/^\+?[0-9]*$/)]],
+      // cityId: [Number],
+      // stateId: [Number],
+      // supportEmail: ['', [Validators.required, Validators.email]],
+      // addressLine1: ['', [Validators.required]],
+      // countryId: [null, [Validators.required]],
+      // addressLine2: [''],
+      // addressLine3: [''],
+      // pinCode: ['', [Validators.required]],
 
     });
   }
@@ -128,6 +128,7 @@ export class OrganizationComponent implements OnInit {
             },
           });
       } else {
+        console.log("click");
         this._planService.createOrganization(this.organizationForm.value).subscribe({
           next: (val: any) => {
             this._coreService.openSnackBar('Organization added successfully');

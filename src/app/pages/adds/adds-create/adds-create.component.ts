@@ -11,6 +11,7 @@ import { AddsService } from 'src/app/services/adds.service';
 import { CityService } from 'src/app/services/city.service';
 import { CountryService } from 'src/app/services/country.service';
 import { LoginService } from 'src/app/services/login.service';
+import { ServiceprovidercategoryService } from 'src/app/services/serviceprovidercategory.service';
 
 @Component({
   selector: 'app-adds-create',
@@ -23,6 +24,7 @@ export class AddsCreateComponent implements OnInit {
   logoBas641!: string;
   addModel: Add = new Add();
   token: any;
+  categoryModel: any;
   private authToken = 'your_authentication_token';
   private apiUrl = 'http://localhost:5148/api/Add';
 
@@ -31,24 +33,31 @@ export class AddsCreateComponent implements OnInit {
     public autherize: LoginService,
     private addService: AddsService,
     private _fb: FormBuilder,
+    private _serviceProviderCategory: ServiceprovidercategoryService,
     private _dialogRef: MatDialogRef<AddsCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _coreService: CoreService,
     private CityService: CityService) {
     this.addForm = this._fb.group({
       id: '0',
-      cityid: ['', [Validators.required]],
+      cityid: '',
+      categoryId: '',
       addImage: '',
-      addPlace: ['', [Validators.required]],
-      fromDate: ['', [Validators.required]],
-      toDate: ['', [Validators.required]],
-      isActive: ''
+      addPlace: '',
+      fromDate: '',
+      toDate: '',
     });
   }
+
+
   ngOnInit(): void {
     this.addForm.patchValue(this.data);
     this.CityService.getCities().subscribe((data: any) => {
       this.cityModel = data;
+    });
+    this._serviceProviderCategory.getServiceprovidercategories().subscribe((data: any) => {
+      console.log(data, "Category Data");
+      this.categoryModel = data;
     });
     console.log("Hi hi hihh");
     this.token = this.autherize.getToken();
@@ -150,6 +159,5 @@ export class AddsCreateComponent implements OnInit {
     this.addModel.fromDate = formData.fromDate;
     this.addModel.toDate = formData.toDate;
     this.addModel.addImage = formData.addImage;
-    this.addModel.isActive = formData.isActive;
   }
 }

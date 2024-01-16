@@ -165,7 +165,7 @@ const routes: Routes = [
       { path: 'update-serviceprovider', component: UpdateServieProviderComponent },
       { path: 'create-state', component: CreateStatesComponent },
       { path: 'service-provider-sub-category-list', component: ServiceProviderSubcategoryListComponent },
-      { path: 'state-create', component: CreateServiceProvderSubCategoriesComponent },
+      { path: 'service-provider-sub-category', component: CreateServiceProvderSubCategoriesComponent },
       { path: 'service-provider-category-service-list', component: ServiceProviderCategoryServicesListComponent },
       { path: 'service-provider-category-service-Create', component: CreateServiceProvderCategoryServicesComponent },
 

@@ -14,10 +14,13 @@
             required</mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width">
-        <mat-label>Main Category ID</mat-label>
-        <input matInput type="number" formControlName="mainCategoryId" required>
-        <mat-error *ngIf="formGroup.get('mainCategoryId')?.hasError('required')">Main Category ID is
-            required</mat-error>
+        <mat-label>Main Category</mat-label>
+        <mat-select formControlName="mainCategoryId" (selectionChange)="onmainCategory($event)" required>
+            <mat-option *ngFor="let category of serviceProviderCategoryList" [value]="category.id">
+                {{ category.name }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.get('mainCategoryId')?.hasError('required')">Main Category is required</mat-error>
     </mat-form-field>
     <input type="file" formControlName="thumnailImagePath" (change)="onchange($event)">
     <img class="baseImage" [src]="logoBas641" width="100" height="80" alt="">

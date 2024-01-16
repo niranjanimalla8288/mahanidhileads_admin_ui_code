@@ -89,11 +89,31 @@ export class ServiceProviderReviewsListComponent implements OnInit {
     }
   }
   deleteEmployee(id: number) {
-    this._planService.deleteServiceproviderreview(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Employee deleted!', 'done');
-    });
+    this._planService.deleteServiceproviderreview(id).subscribe(
+      (data: any) => {
+        // Handle success, if needed
+        this.getPlanList();
+        this._coreService.openSnackBar('Service Provider Review deleted!', 'done');
+      },
+      (error: any) => {
+        // Handle error
+        console.error(error);
+
+        // Check for 401 (Unauthorized) or 403 (Forbidden) status codes
+        if (error.status === 401) {
+          this._coreService.openSnackBar('Unauthorized access! Please log in.', 'error');
+          // Optionally, you can redirect to the login page or perform other actions
+        } else if (error.status === 403) {
+          this._coreService.openSnackBar('Access forbidden! You do not have permission for this action.', 'error');
+          // Optionally, you can redirect to an unauthorized page or perform other actions
+        } else {
+          // For other errors, provide a generic error message
+          this._coreService.openSnackBar('Error deleting Service Provider Review!', 'error');
+        }
+      }
+    );
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -118,5 +138,10 @@ export class ServiceProviderReviewsListComponent implements OnInit {
   getProviderName(serviceProviderId: number): string {
     const Provider = this.provider.find(p => p.id === serviceProviderId);
     return Provider ? Provider.businessName : '';
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Service Provider Review Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,6 +11,7 @@ import { PlanUpdateComponent } from '../../plan/plan-update/plan-update.componen
 import { AminitiesService } from 'src/app/services/aminities.service';
 import { AminitiesCreateUpdateComponent } from '../aminities-create-update/aminities-create-update.component';
 import { ServiceprovidercategoryService } from 'src/app/services/serviceprovidercategory.service';
+import { AlertPageComponent } from 'src/app/alert-page/alert-page.component';
 
 @Component({
   selector: 'app-aminities-get-list',
@@ -84,12 +85,35 @@ export class AminitiesGetListComponent {
   }
 
   deleteEmployee(id: number) {
-    this._planService.deleteAmenities(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Badge deleted!', 'done');
+    const deletemessage = confirm("Are you sure want to delete Aminities Details");
+    if (deletemessage) {
+      this._planService.deleteAmenities(id).subscribe(
+        (data: any) => {
+          // Handle successful deletion
+          this.getPlanList();
+          this._coreService.openSnackBar('Badge deleted!', 'done');
+        },
+        (error: any) => {
+          // Handle error
+          console.error('Error deleting badge:', error);
 
-    });
+          if (error.status === 401) {
+            // Unauthorized error handling
+            this._coreService.openSnackBar('Unauthorized. Please log in.', 'error');
+            // You might want to redirect the user to the login page or take appropriate action
+          } else if (error.status === 403) {
+            // Forbidden error handling
+            this._coreService.openSnackBar('Forbidden. You do not have permission.', 'error');
+            // You might want to redirect the user to a page indicating insufficient permissions
+          } else {
+            // Generic error handling
+            this._coreService.openSnackBar('Error deleting badge. Please try again.', 'error');
+          }
+        }
+      );
+    }
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -112,5 +136,10 @@ export class AminitiesGetListComponent {
   getCagtegory(categoryId: number): string {
     const Category = this.categoryList.find(c => c.id === categoryId);
     return Category ? Category.name : '';
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Aminities Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

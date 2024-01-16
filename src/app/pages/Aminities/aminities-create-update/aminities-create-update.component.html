@@ -1,24 +1,36 @@
 <form [formGroup]="badgeForm" (ngSubmit)="onSubmit()">
-    <h1>Aminities</h1>
-
+    <h1>Amenities</h1>
     <mat-form-field appearance="fill">
-        <mat-label>CategoryId</mat-label>
-        <input matInput formControlName="categoryId" required />
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryId" required>
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="badgeForm.get('categoryId')?.hasError('required')">
+            Category is required
+        </mat-error>
     </mat-form-field>
-
     <mat-form-field appearance="fill">
         <mat-label>Options</mat-label>
         <input matInput formControlName="options" required />
+        <mat-error *ngIf="badgeForm.get('options')?.hasError('required')">
+            Options is required
+        </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <!-- <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>
         <input matInput formControlName="status" required />
-    </mat-form-field>
+        <mat-error *ngIf="badgeForm.get('status')?.hasError('required')">
+            Status is required
+        </mat-error>
+    </mat-form-field> -->
 
     <div mat-dialog-actions class="action">
         <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-        <button mat-raised-button color="primary" type="submit">{{data ? 'Update': 'Save'}}</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!badgeForm.valid">
+            {{data ? 'Update': 'Save'}}
+        </button>
     </div>
 </form>
-

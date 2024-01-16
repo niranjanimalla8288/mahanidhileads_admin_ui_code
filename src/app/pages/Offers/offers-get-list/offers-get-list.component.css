@@ -17,6 +17,14 @@
     margin-top: 10px;
 }
 
+.create_btn i {
+    color: black;
+}
+
+.create_btn button {
+    margin-left: 10px;
+}
+
 .action {
     display: flex;
     gap: 5px;
@@ -41,10 +49,12 @@ i {
     margin-top: 6px;
     font-size: 20px;
 }
-.baseImage{
+
+.baseImage {
     width: 80px;
     height: 100px;
 }
+
 .container {
     border: solid 1px #393939;
     margin-top: 40px;

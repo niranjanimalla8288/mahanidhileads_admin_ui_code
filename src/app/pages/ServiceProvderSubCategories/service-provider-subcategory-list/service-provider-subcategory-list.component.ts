@@ -6,8 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CoreService } from 'src/app/core/core.service';
 import { Badge } from 'src/app/model/badge';
-import { PlanService } from 'src/app/services/plan.service';
-import { CreateServiceProvderCategoryServicesComponent } from '../../ServiceProvderCategoryServices/create-service-provder-category-services/create-service-provder-category-services.component';
 import { ServiceprovidersubcategoryService } from 'src/app/services/serviceprovidersubcategory.service';
 import { CreateServiceProvderSubCategoriesComponent } from '../create-service-provder-sub-categories/create-service-provder-sub-categories.component';
 import { ServiceprovidercategoryService } from 'src/app/services/serviceprovidercategory.service';

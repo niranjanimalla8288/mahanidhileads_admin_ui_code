@@ -8,6 +8,7 @@ import { ServiceprovidersubcategoryService } from 'src/app/services/serviceprovi
 import { Observable, Subscriber } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ServiceprovidercategoryserviceModel } from 'src/app/services/serviceprovidercategoryservice';
+import { ServiceprovidercategoryService } from 'src/app/services/serviceprovidercategory.service';
 
 @Component({
   selector: 'app-create-service-provder-sub-categories',
@@ -19,29 +20,35 @@ export class CreateServiceProvderSubCategoriesComponent implements OnInit {
   formGroup!: FormGroup;
   logoBas641: any;
   serviceProviderCategoryModel: any[] = [];
+  serviceProviderCategoryList: any;
   constructor(
     private _fb: FormBuilder,
     public _Service: ServiceprovidersubcategoryService,
-    private _serviceCategory: ServiceprovidercategoryserviceModel,
+    // private _serviceCategory: ServiceprovidercategoryserviceModel,
+    private _serviceProviderCategory: ServiceprovidercategoryService,
     private _dialogRef: MatDialogRef<PlanUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _coreService: CoreService) {
     this.formGroup = this._fb.group({
       id: '0',
       name: '',
-      // parentCategoryId: '',
+      parentCategoryId: '',
       mainCategoryId: '',
       thumnailImagePath: '',
     });
   }
   ngOnInit(): void {
     this.formGroup.patchValue(this.data);
-    this.logoBas641 = this.data.thumnailImagePath;
+    // this.logoBas641 = this.data.thumnailImagePath;
     this._Service.getServiceprovidersubcategories().subscribe((data: any) => {
       this.serviceProviderCategoryModel = data;
       console.log(data, "service provider sub category details");
     });
     console.log("Hi i am working");
+    this._serviceProviderCategory.getServiceprovidercategories().subscribe((data: any) => {
+      this.serviceProviderCategoryList = data;
+      console.log(data, "service provider category list");
+    });
   }
   onSubmit() {
     if (this.formGroup.valid) {
@@ -129,7 +136,9 @@ export class CreateServiceProvderSubCategoriesComponent implements OnInit {
   onServiceMainCategory(event: MatSelectChange): void {
 
   }
-
+  onmainCategory(event: MatSelectChange): void {
+    console.log("Category Select", event.value);
+  }
 }
 
 

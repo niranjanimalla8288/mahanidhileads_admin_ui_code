@@ -17,7 +17,7 @@ import { OffersService } from 'src/app/services/offers.service';
   styleUrls: ['./offers-create-update.component.css']
 })
 export class OffersCreateUpdateComponent {
-  badgeForm!: FormGroup;
+  offerForm!: FormGroup;
   AminitiesModel: Aminities = new Aminities();
   logoBas64!: string;
   constructor(
@@ -27,25 +27,25 @@ export class OffersCreateUpdateComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _coreService: CoreService) {
 
-    this.badgeForm = this._fb.group({
+    this.offerForm = this._fb.group({
       id: '0',
       // postId:'',
       title: '',
       featuredImage: '',
-      hasTimeLimit: '',
+      // hasTimeLimit: '',
       // activationDate: '',
       // expirationDate: '',
-      createdBy: '',
+      // createdBy: '',
       // createdTime: '',
       // publishTime: '',
       // lastUpdatedTime: '',
-      status: '',
+      // status: '',
     });
   }
 
   ngOnInit(): void {
 
-    this.badgeForm.patchValue(this.data);
+    this.offerForm.patchValue(this.data);
     console.log(this.data.featuredImage);
     console.log(this.data.name)
     this.logoBas64 = this.data.featuredImage;
@@ -53,33 +53,49 @@ export class OffersCreateUpdateComponent {
   }
 
   onSubmit() {
-    if (this.badgeForm.valid) {
-      this.badgeForm.value.featuredImage = this.logoBas64;
+    if (this.offerForm.valid) {
+      this.offerForm.value.featuredImage = this.logoBas64;
+
       if (this.data) {
-        // this.logoBas64=this.data.thumbnailImagePath;
-        this._planService
-          .updateoffers(this.data.id, this.badgeForm.value)
-          .subscribe({
-            next: (val: any) => {
-              this._coreService.openSnackBar('Badge detail updated!');
-              this._dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-            },
-          });
-      } else {
-        console.log(this.badgeForm.value);
-        console.log(this.badgeForm.value.featuredImage = this.logoBas64);
-        // this.badgeForm.value.thumnailImagePath = this.logoBas641;
-        // this.badgeForm.patchValue({ thumnailImagePath: this.logoBas641 });
-        this._planService.createOffers(this.badgeForm.value).subscribe({
+        this._planService.updateoffers(this.data.id, this.offerForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Badge added successfully');
+            this._coreService.openSnackBar('Offer detail updated!');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
-            console.error(err);
+            console.error('Error updating Offer:', err);
+
+            if (err.status === 401) {
+              console.error('Unauthorized access. Please log in.');
+              // Handle unauthorized access (redirect to login or show a message)
+            } else if (err.status === 403) {
+              console.error('Forbidden access. You do not have permission.');
+              // Handle forbidden access (redirect to an access denied page or show a message)
+            } else {
+              console.error('Unexpected error. Please try again later.');
+              // Handle other errors (show a generic error message or perform other actions)
+            }
+          },
+        });
+      } else {
+        this._planService.createOffers(this.offerForm.value).subscribe({
+          next: (val: any) => {
+            this._coreService.openSnackBar('Offer added successfully');
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error('Error adding Offer:', err);
+
+            if (err.status === 401) {
+              console.error('Unauthorized access. Please log in.');
+              // Handle unauthorized access (redirect to login or show a message)
+            } else if (err.status === 403) {
+              console.error('Forbidden access. You do not have permission.');
+              // Handle forbidden access (redirect to an access denied page or show a message)
+            } else {
+              console.error('Unexpected error. Please try again later.');
+              // Handle other errors (show a generic error message or perform other actions)
+            }
           },
         });
       }

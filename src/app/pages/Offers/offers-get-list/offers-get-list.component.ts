@@ -83,12 +83,36 @@ export class OffersGetListComponent {
   }
 
   deleteEmployee(id: number) {
-    this._planService.deleteoffers(id).subscribe((data: any) => {
-      this.getPlanList();
-      this._coreService.openSnackBar('Badge deleted!', 'done');
+    this._planService.deleteoffers(id).subscribe(
+      (data: any) => {
+        // Success: Handle the success case
+        this.getPlanList();
+        this._coreService.openSnackBar('Offers deleted!', 'done');
+      },
+      (error: any) => {
+        // Error: Handle the error case
+        console.error('Error deleting Offers:', error);
 
-    });
+        if (error.status === 401) {
+          // Handle 401 Unauthorized error
+          console.error('Unauthorized access. Please log in.');
+          // You can redirect to a login page or show an unauthorized message.
+        } else if (error.status === 403) {
+          // Handle 403 Forbidden error
+          console.error('Forbidden access. You do not have permission.');
+          // You can redirect to an access denied page or show a permission denied message.
+        } else {
+          // Handle other errors
+          console.error('Unexpected error. Please try again later.');
+          // You can show a generic error message or perform other actions.
+        }
+
+        // You can show an error message or perform other actions as needed
+        this._coreService.openSnackBar('Error deleting Offers!', 'error');
+      }
+    );
   }
+
 
   openEditForm(data: any) {
     console.log(data);
@@ -104,5 +128,10 @@ export class OffersGetListComponent {
         }
       },
     });
+  }
+
+  refreshList() {
+    this._coreService.openSnackBar('Offers Details Refreshed', 'done');
+    this.getPlanList();
   }
 }

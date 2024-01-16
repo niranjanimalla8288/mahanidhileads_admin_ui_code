@@ -71,21 +71,38 @@ export class CreateServiceProvderReviewsComponent implements OnInit {
             },
             error: (err: any) => {
               console.error(err);
+              this.handleApiError(err);
             },
           });
       } else {
         this._planService.createServiceproviderreview(this.formGroup.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('SP Review  added successfully');
+            this._coreService.openSnackBar('SP Review added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
             console.error(err);
+            this.handleApiError(err);
           },
         });
       }
     }
   }
+
+  private handleApiError(error: any): void {
+    // Check for specific error status codes and provide appropriate messages or actions
+    if (error.status === 401) {
+      this._coreService.openSnackBar('Unauthorized access! Please log in.', 'error');
+      // Optionally, you can redirect to the login page or perform other actions
+    } else if (error.status === 403) {
+      this._coreService.openSnackBar('Access forbidden! You do not have permission for this action.', 'error');
+      // Optionally, you can redirect to an unauthorized page or perform other actions
+    } else {
+      // For other errors, provide a generic error message
+      this._coreService.openSnackBar('Error processing request!', 'error');
+    }
+  }
+
 }
 
 

@@ -25,6 +25,7 @@ export class AddsCreateComponent implements OnInit {
   addModel: Add = new Add();
   token: any;
   categoryModel: any;
+  loading: boolean = false;
   private authToken = 'your_authentication_token';
   private apiUrl = 'http://localhost:5148/api/Add';
 
@@ -64,7 +65,7 @@ export class AddsCreateComponent implements OnInit {
     console.log(this.token, "token value");
     console.log("login token data", this.token.token);
     // this.tokenValue();
-    this.logoBas641 = this.data.addImage;
+    // this.logoBas641 = this.data.addImage;
   }
 
   onSubmit() {
@@ -91,6 +92,15 @@ export class AddsCreateComponent implements OnInit {
           },
         });
     } else {
+      this.loading = true;
+
+      // Simulate an asynchronous operation (e.g., HTTP request)
+      setTimeout(() => {
+        // Your submit logic here
+
+        // After successful or failed submission, reset loading to false
+        this.loading = false;
+      }, 2000);
       // If data is not present, it's a new record, so create a new add
       this.addService.createAdd(this.addForm.value).subscribe({
         next: (val: any) => {

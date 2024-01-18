@@ -35,16 +35,18 @@ export class LoginService {
     localStorage.setItem('token', tokenValue);
     localStorage.setItem('registerDetails', JSON.stringify(Signup));
   }
-  // getCustomer(): any {
-  //   const cust = localStorage.getItem('registerDetails');
 
-  //   if (cust) {
-  //     return JSON.parse(cust); 
 
-  //   } else {
-  //     return null;
-  //   }
-  // }
+  getCustomer(): any {
+    const cust = localStorage.getItem('registerDetails');
+
+    if (cust) {
+      return JSON.parse(cust);
+
+    } else {
+      return null;
+    }
+  }
 
 
   getToken(): string | null {

@@ -55,6 +55,10 @@
                 </mat-form-field>
 
             </div>
+            <div *ngIf="loading" class="loading-spinner">
+                <!-- Add your loading spinner or symbol here -->
+                Loading...
+            </div>
             <div class="col-md-6">
                 <input type="file" id="addImage" formControlName="addImage" (change)="onchange($event)"
                     accept="image/*">
@@ -70,5 +74,5 @@
             </div> -->
         </div>
     </div>
-    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <button mat-raised-button color="primary" [disabled]="loading" type="submit">Submit</button>
 </form>

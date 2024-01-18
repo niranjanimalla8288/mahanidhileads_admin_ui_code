@@ -125,31 +125,54 @@ export class UpdateServieProviderComponent implements OnInit {
   onSubmit() {
     if (this.serviceproviderForm.valid) {
       this.serviceproviderForm.value.thumnailImagePath = this.logoBas641;
+
       if (this.data) {
-        this._planService
-          .updateServiceProvider(this.data.id, this.serviceproviderForm.value)
-          .subscribe({
-            next: (val: any) => {
-              this._coreService.openSnackBar('Servive Provider detail updated!');
-              this._dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-            },
-          });
-      } else {
-        this._planService.createServiceProvider(this.serviceproviderForm.value).subscribe({
+        this._planService.updateServiceProvider(this.data.id, this.serviceproviderForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Servive Provider added successfully');
+            this._coreService.openSnackBar('Service Provider detail updated!');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
-            console.error(err);
+            console.error('Error updating service provider:', err);
+
+            // Handle specific error cases
+            if (err.status === 404) {
+              this._coreService.openSnackBar('Service Provider not found. Please try again.');
+            } else if (err.status === 403) {
+              this._coreService.openSnackBar('You do not have permission to update this service provider.');
+            } else {
+              this._coreService.openSnackBar('An error occurred while updating service provider.');
+            }
+          },
+        });
+      } else {
+        this._planService.createServiceProvider(this.serviceproviderForm.value).subscribe({
+          next: (val: any) => {
+            this._coreService.openSnackBar('Service Provider added successfully');
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error('Error creating service provider:', err);
+
+            // Handle specific error cases
+            if (err.status === 400) {
+              this._coreService.openSnackBar('Bad request. Please check your input and try again.');
+            } else if (err.status === 402) {
+              this._coreService.openSnackBar('Payment is required to add a service provider.');
+            } else if (err.status === 403) {
+              this._coreService.openSnackBar('You do not have permission to add a service provider.');
+            } else {
+              this._coreService.openSnackBar('An error occurred while adding service provider.');
+            }
           },
         });
       }
+    } else {
+      // Handle form validation errors
+      this._coreService.openSnackBar('Please fill in all required fields correctly.');
     }
   }
+
 
   onchange = ($event: Event) => {
     const target = $event.target as HTMLInputElement;

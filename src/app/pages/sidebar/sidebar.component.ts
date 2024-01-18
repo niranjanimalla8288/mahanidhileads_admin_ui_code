@@ -13,11 +13,15 @@ import { LoginService } from 'src/app/services/login.service';
 export class SidebarComponent implements OnInit {
   opened = true;
   playerData: any;
+  registerDetails: any;
   constructor(private route: Router, private authService: LoginService) { }
   ngOnInit() {
     console.log("user details");
     // this.playerData = this.authService.getCustomer();
     console.log(this.playerData);
+    console.log("registerf details");
+
+
   }
   SignOut() {
     this.authService.signOut();
